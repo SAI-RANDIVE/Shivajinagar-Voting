@@ -78,6 +78,22 @@ button,input,select,textarea{font:inherit;color:inherit}
 .credit{color:var(--navy-ink2);font-size:12px;margin-top:18px;text-align:center}
 .credit b{color:var(--navy-ink);font-weight:600}
 
+/* login is always light so typed text stays readable in any phone theme */
+#login .lockcard{color-scheme:light;background:#ffffff;color:#14171f}
+#login .lockcard h1{color:#14171f}
+#login .lockcard p,#login .field span{color:#4b5263}
+#login .seg{background:#f0f2f5}
+#login .seg button{color:#4b5263}
+#login .seg button.on{background:#ffffff;color:#14171f}
+#login .field input{background:#ffffff;color:#14171f;-webkit-text-fill-color:#14171f;caret-color:#e8730c;border-color:#cfd4dc}
+#login .field input::placeholder{color:#8a91a0;-webkit-text-fill-color:#8a91a0;opacity:1}
+#login .field input:focus{outline:none;border-color:#e8730c;box-shadow:0 0 0 3px rgba(232,115,12,.18)}
+#login .field input:-webkit-autofill{-webkit-box-shadow:0 0 0 40px #ffffff inset;-webkit-text-fill-color:#14171f}
+#login .err{color:#c53030}
+/* app form fields: explicit colours from theme tokens */
+.filters select,.filters input,.note{color:var(--ink);-webkit-text-fill-color:var(--ink);background:var(--card)}
+.filters input::placeholder,.note::placeholder{color:var(--ink3);-webkit-text-fill-color:var(--ink3);opacity:1}
+select option{color:var(--ink);background:var(--card)}
 /* shell */
 header.top{background:var(--navy);color:var(--navy-ink);padding:10px 16px 0;position:sticky;top:0;z-index:20;padding-top:max(10px,env(safe-area-inset-top))}
 .toprow{display:flex;align-items:center;gap:8px}
