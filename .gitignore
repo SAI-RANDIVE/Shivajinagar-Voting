@@ -14,3 +14,4 @@ Siddharth Shirole.jpeg
 
 *.jpeg
 *.jpg
+!public/img/*.jpg
