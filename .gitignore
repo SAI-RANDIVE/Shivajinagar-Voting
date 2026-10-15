@@ -1,0 +1,13 @@
+.neon
+.env
+.env.local
+node_modules/
+.netlify/
+
+# Voter data contains personal details - it lives in Neon, never in git.
+*.xlsx
+*.xls
+*.csv
+data/
+index (3).html
+Siddharth Shirole.jpeg

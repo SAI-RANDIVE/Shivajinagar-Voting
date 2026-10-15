@@ -1,0 +1,16 @@
+{
+  "name": "shivajinagar-voting",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/dev.mjs",
+    "prepare-data": "python scripts/prepare_data.py",
+    "seed": "node scripts/seed.mjs"
+  },
+  "dependencies": {
+    "@neon/config": "^1.9.1",
+    "@neon/env": "^1.6.2",
+    "@neondatabase/serverless": "^1.2.0"
+  }
+}
