@@ -5,14 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#14213d">
+<meta name="color-scheme" content="light only">
 <title>Chhatrapati Shivajinagar Calling Desk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  color-scheme:light;
-  --bg:#f3f4f6;--card:#ffffff;--ink:#14171f;--ink2:#4b5263;--ink3:#737a8c;--line:#e2e5eb;--hover:#f7f8fa;
+  color-scheme:light only;
+  --bg:#f3f4f6;--card:#ffffff;--ink:#000000;--ink2:#1c1f26;--ink3:#3a3f4b;--line:#e2e5eb;--hover:#f7f8fa;
   --brand:#e8730c;--brand-ink:#ffffff;--brand-soft:#fff1e4;--navy:#14213d;--navy2:#1f2f52;--navy-ink:#ffffff;--navy-ink2:#aab4cc;
   --ok:#1a8f4c;--ok-soft:#e3f4ea;--neu:#5f6675;--neu-soft:#eceef2;--bad:#c53030;--bad-soft:#fbe9e9;
   --warn:#a86a12;--warn-soft:#fbf0dc;--info:#2a6fc4;--info-soft:#e6effb;--off:#3f4552;--off-soft:#e4e6ea;
@@ -20,30 +21,8 @@
   --t1:#7b2cbf;--t1s:#f2e8fb;--t2:#c25e06;--t2s:#fff1e4;--t3:#2a6fc4;--t3s:#e6effb;--t4:#5f6675;--t4s:#eceef2;
   --r:12px;--sh:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08);
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    color-scheme:dark;
-    --bg:#111318;--card:#1a1d24;--ink:#eef0f4;--ink2:#c0c5d0;--ink3:#8d94a3;--line:#2c313b;--hover:#21252e;
-    --brand:#f0812a;--brand-soft:#3a2614;--navy:#0c1427;--navy2:#16213b;
-    --ok:#3fbf75;--ok-soft:#163323;--neu:#a3aab8;--neu-soft:#262a33;--bad:#ef6b6b;--bad-soft:#3a1b1b;
-    --warn:#e0a640;--warn-soft:#352812;--info:#6aa6ee;--info-soft:#16263d;--off:#b5bbc7;--off-soft:#2a2e37;
-    --bar:#3987e5;--track:#2a2f39;
-    --t1:#c08af0;--t1s:#2d1d3d;--t2:#f3a05a;--t2s:#3a2614;--t3:#6aa6ee;--t3s:#16263d;--t4:#a3aab8;--t4s:#262a33;
-    --sh:0 1px 2px rgba(0,0,0,.4);
-  }
-}
-:root[data-theme="dark"]{
-  color-scheme:dark;
-  --bg:#111318;--card:#1a1d24;--ink:#eef0f4;--ink2:#c0c5d0;--ink3:#8d94a3;--line:#2c313b;--hover:#21252e;
-  --brand:#f0812a;--brand-soft:#3a2614;--navy:#0c1427;--navy2:#16213b;
-  --ok:#3fbf75;--ok-soft:#163323;--neu:#a3aab8;--neu-soft:#262a33;--bad:#ef6b6b;--bad-soft:#3a1b1b;
-  --warn:#e0a640;--warn-soft:#352812;--info:#6aa6ee;--info-soft:#16263d;--off:#b5bbc7;--off-soft:#2a2e37;
-  --bar:#3987e5;--track:#2a2f39;
-  --t1:#c08af0;--t1s:#2d1d3d;--t2:#f3a05a;--t2s:#3a2614;--t3:#6aa6ee;--t3s:#16263d;--t4:#a3aab8;--t4s:#262a33;
-  --sh:0 1px 2px rgba(0,0,0,.4);
-}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 Inter,"Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+html,body{margin:0;background:var(--bg);color:var(--ink);color-scheme:light only;font:14px/1.45 Inter,"Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
 button,input,select,textarea{font:inherit;color:inherit}
 .mr{font-family:"Noto Sans Devanagari",Inter,sans-serif}
 .num{font-variant-numeric:tabular-nums}
@@ -79,16 +58,16 @@ button,input,select,textarea{font:inherit;color:inherit}
 .credit b{color:var(--navy-ink);font-weight:600}
 
 /* login is always light so typed text stays readable in any phone theme */
-#login .lockcard{color-scheme:light;background:#ffffff;color:#14171f}
-#login .lockcard h1{color:#14171f}
-#login .lockcard p,#login .field span{color:#4b5263}
+#login .lockcard{color-scheme:light only;background:#ffffff;color:#000000}
+#login .lockcard h1{color:#000000}
+#login .lockcard p,#login .field span{color:#1c1f26}
 #login .seg{background:#f0f2f5}
-#login .seg button{color:#4b5263}
-#login .seg button.on{background:#ffffff;color:#14171f}
-#login .field input{background:#ffffff;color:#14171f;-webkit-text-fill-color:#14171f;caret-color:#e8730c;border-color:#cfd4dc}
-#login .field input::placeholder{color:#8a91a0;-webkit-text-fill-color:#8a91a0;opacity:1}
+#login .seg button{color:#1c1f26}
+#login .seg button.on{background:#ffffff;color:#000000}
+#login .field input{background:#ffffff;color:#000000;-webkit-text-fill-color:#000000;caret-color:#e8730c;border-color:#cfd4dc}
+#login .field input::placeholder{color:#5a606c;-webkit-text-fill-color:#5a606c;opacity:1}
 #login .field input:focus{outline:none;border-color:#e8730c;box-shadow:0 0 0 3px rgba(232,115,12,.18)}
-#login .field input:-webkit-autofill{-webkit-box-shadow:0 0 0 40px #ffffff inset;-webkit-text-fill-color:#14171f}
+#login .field input:-webkit-autofill{-webkit-box-shadow:0 0 0 40px #ffffff inset;-webkit-text-fill-color:#000000}
 #login .err{color:#c53030}
 /* app form fields: explicit colours from theme tokens */
 .filters select,.filters input,.note{color:var(--ink);-webkit-text-fill-color:var(--ink);background:var(--card)}
@@ -194,8 +173,8 @@ tr.click:hover td{background:var(--hover)}
 .feed .it:last-child{border-bottom:0}
 .feed .when{color:var(--ink3);font-size:11px;white-space:nowrap;min-width:64px}
 .feed .what{flex:1;min-width:0;overflow-wrap:anywhere}
-.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--card);font-size:12px;padding:6px 8px;border-radius:6px;z-index:50;white-space:nowrap;transform:translate(-50%,-110%)}
-.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--card);padding:10px 14px;border-radius:10px;font-size:13px;z-index:60;box-shadow:0 6px 20px rgba(0,0,0,.25);max-width:calc(100% - 32px)}
+.tip{position:fixed;pointer-events:none;background:#000;color:#fff;font-size:12px;padding:6px 8px;border-radius:6px;z-index:50;white-space:nowrap;transform:translate(-50%,-110%)}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#000;color:#fff;padding:10px 14px;border-radius:10px;font-size:13px;z-index:60;box-shadow:0 6px 20px rgba(0,0,0,.25);max-width:calc(100% - 32px)}
 
 /* guidance banner */
 .banner{position:relative;overflow:hidden;border-radius:16px;background:linear-gradient(115deg,#f37a12 0%,#e8730c 38%,#c4560a 100%);color:#fff;padding:16px 18px;display:flex;align-items:center;gap:16px;box-shadow:0 10px 30px rgba(196,86,10,.25)}
@@ -266,7 +245,6 @@ tr.click:hover td{background:var(--hover)}
       <div class="logo">शि</div>
       <h1>Chhatrapati Shivajinagar Calling Desk<small id="who"></small></h1>
       <span class="sync" id="sync"><span class="dot"></span><span class="hide-sm" id="syncTxt">Live</span></span>
-      <button class="btn ghost" id="themeBtn" title="Switch light/dark">◐</button>
       <button class="btn ghost" id="logoutBtn">Log out</button>
     </div>
     <nav class="tabs" id="tabs"></nav>
@@ -355,9 +333,6 @@ function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTi
 function ago(ts){const s=(Date.now()-new Date(ts))/1000;if(s<60)return'just now';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return new Date(ts).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}
 function pinLabel(p){return p?(PINNAME[p]?`${p} · ${PINNAME[p]}`:p):'No pin code'}
 
-/* theme */
-(function(){const t=store.get('scd_theme');if(t)document.documentElement.dataset.theme=t})();
-$('#themeBtn').onclick=()=>{const dark=document.documentElement.dataset.theme?document.documentElement.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;const n=dark?'light':'dark';document.documentElement.dataset.theme=n;store.set('scd_theme',n)};
 
 /* api */
 async function api(path,opts={}){
