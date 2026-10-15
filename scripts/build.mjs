@@ -1,7 +1,7 @@
 // Build check for Netlify: the site is static, so this verifies the pieces exist and the function loads.
 import { existsSync, readFileSync } from 'node:fs';
 
-const required = ['public/index.html', 'public/img/siddharth-shirole.jpg', 'netlify/functions/api.mjs', 'lib/schema.mjs'];
+const required = ['public/index.html', 'public/img/siddharth-shirole.jpg', 'public/img/sapna-chhajed.jpg', 'public/img/anand-chhajed.jpg', 'netlify/functions/api.mjs', 'lib/schema.mjs'];
 const missing = required.filter((f) => !existsSync(f));
 if (missing.length) throw new Error(`Missing files: ${missing.join(', ')}`);
 

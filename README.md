@@ -2,7 +2,7 @@
 
 Calling desk for the 209 Shivajinagar graduate & teacher voter lists. Volunteers log in, call voters pin code by pin code, and tap the outcome. The Adhyaksh dashboard shows live progress.
 
-Under the guidance of **Siddharth Shirole** (MLA, Shivajinagar) and **Anand Chajjed** (Uttar Mandal Adhyaksh).
+Under the guidance of **Siddharth Shirole** (MLA, Shivajinagar), **Sapna Chhajed** (Corporator, Pune Municipal Corporation) and **Anand Chhajed** (Uttar Mandal Adhyaksh).
 Developed by **Sai Randive** (Sarchitnis, BJYM).
 
 ## How it works

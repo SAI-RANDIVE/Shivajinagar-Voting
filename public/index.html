@@ -183,20 +183,24 @@ tr.click:hover td{background:var(--hover)}
 .banner .kicker{font-size:11px;letter-spacing:.8px;text-transform:uppercase;opacity:.9;font-weight:600}
 .banner .kicker.mr{letter-spacing:0;text-transform:none;font-size:13px}
 .banner h2{margin:2px 0 0;font-size:17px;line-height:1.3}
-.leaders{display:flex;gap:14px;position:relative;z-index:1}
-.leader{display:flex;flex-direction:column;align-items:center;text-align:center;width:118px}
+.leaders{display:flex;gap:12px;position:relative;z-index:1;justify-content:center}
+.leader{display:flex;flex-direction:column;align-items:center;text-align:center;width:124px;min-width:0}
 .leader .ph{width:78px;height:78px;border-radius:50%;border:3px solid #fff;background:#fff2e6 center/cover no-repeat;box-shadow:0 4px 14px rgba(0,0,0,.2);display:grid;place-items:center;color:#c4560a;font-weight:700;font-size:22px;overflow:hidden}
 .leader .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .leader b{font-size:13px;margin-top:6px;line-height:1.2}
 .leader small{font-size:11px;opacity:.92;line-height:1.25}
-.login-banner{width:100%;max-width:390px;margin-bottom:14px;flex-direction:column;text-align:center;gap:10px}
-.login-banner .leaders{justify-content:center}
+.login-banner{width:100%;max-width:430px;margin-bottom:14px;flex-direction:column;text-align:center;gap:10px}
+.login-banner .leaders{justify-content:center;width:100%}
+.login-banner .leader{flex:1 1 0;width:auto}
+.login-banner .leader .ph{width:70px;height:70px}
 .app-banner{margin-bottom:14px}
 @media (max-width:640px){
   .app-banner{flex-direction:column;align-items:stretch;text-align:center;padding:14px 12px}
   .app-banner .leaders{justify-content:center}
-  .leader{width:auto;flex:1;max-width:150px}
+  .leader{width:auto;flex:1 1 0;max-width:150px}
   .leader .ph{width:64px;height:64px}
+  .leader b{font-size:12px}
+  .leader small{font-size:10.5px}
   .banner h2{font-size:15px}
 }
 @media (max-width:560px){
@@ -215,9 +219,9 @@ tr.click:hover td{background:var(--hover)}
     <div class="lead"><div class="kicker mr">यांच्या मार्गदर्शनाखाली</div><h2>Under the guidance of</h2></div>
     <div class="leaders">
       <div class="leader"><div class="ph"><img src="img/siddharth-shirole.jpg" alt="Siddharth Shirole"></div><b>Siddharth Shirole</b><small>MLA, Shivajinagar</small></div>
-      <div class="leader"><div class="ph"><img src="img/anand-chajjed.jpg" alt="Anand Chajjed" onerror="this.parentNode.textContent='AC'"></div><b>Anand Chajjed</b><small>Uttar Mandal Adhyaksh</small></div>
+      <div class="leader"><div class="ph"><img src="img/sapna-chhajed.jpg" alt="Sapna Chhajed"></div><b>Sapna Chhajed</b><small>Corporator, Pune Municipal Corporation</small></div>
+      <div class="leader"><div class="ph"><img src="img/anand-chhajed.jpg" alt="Anand Chhajed"></div><b>Anand Chhajed</b><small>Uttar Mandal Adhyaksh</small></div>
     </div>
-  </div>
   <form class="lockcard" id="loginForm" autocomplete="on">
     <div class="brandmark">शि</div>
     <h1>Shivajinagar Calling Desk</h1>
@@ -253,8 +257,8 @@ tr.click:hover td{background:var(--hover)}
       <div class="lead"><div class="kicker">Under the guidance of · <span class="mr">यांच्या मार्गदर्शनाखाली</span></div><h2>Shivajinagar Graduate &amp; Teacher Voter Outreach</h2></div>
       <div class="leaders">
       <div class="leader"><div class="ph"><img src="img/siddharth-shirole.jpg" alt="Siddharth Shirole"></div><b>Siddharth Shirole</b><small>MLA, Shivajinagar</small></div>
-      <div class="leader"><div class="ph"><img src="img/anand-chajjed.jpg" alt="Anand Chajjed" onerror="this.parentNode.textContent='AC'"></div><b>Anand Chajjed</b><small>Uttar Mandal Adhyaksh</small></div>
-    </div>
+      <div class="leader"><div class="ph"><img src="img/sapna-chhajed.jpg" alt="Sapna Chhajed"></div><b>Sapna Chhajed</b><small>Corporator, Pune Municipal Corporation</small></div>
+      <div class="leader"><div class="ph"><img src="img/anand-chhajed.jpg" alt="Anand Chhajed"></div><b>Anand Chhajed</b><small>Uttar Mandal Adhyaksh</small></div>
     </div>
     <!-- calling view -->
     <section id="callView" hidden>
