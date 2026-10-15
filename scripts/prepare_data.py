@@ -90,8 +90,11 @@ def main():
     for i, r in enumerate(t.to_dict('records')):
         r = {k: clean(v) for k, v in r.items()}
         age = to_int(r['age'])
+        # Same Marathi name and either a close age (the two lists differ by up to 2 years) or the same relative.
         match = next((v for v in by_name.get(key(r['name_mr']), [])
-                      if v['source'] == 'graduate' and (age is None or v['age'] is None or abs(v['age'] - age) <= 1)), None)
+                      if v['source'] == 'graduate' and (
+                          age is None or v['age'] is None or abs(v['age'] - age) <= 2
+                          or (r['relative'] and v['relative'] and key(v['relative']) in key(r['relative'])))), None)
         if match:
             dual += 1
             match.update(source='both', institution=r['institution'], remark=r['remark'],
@@ -109,6 +112,13 @@ def main():
             'raw_row': i,
         })
 
+    # Flag likely duplicate entries: same name, age and pin code listed twice.
+    seen = {}
+    for v in voters:
+        k = (key(v['name_mr']), v['age'], v['pin'])
+        v['possible_dup'] = seen.get(k)
+        seen.setdefault(k, v['id'])
+
     for v in voters:
         v['tier'] = tier_of(v['source'] == 'both', v['occupation'], v['education'], v['source'] != 'graduate')
 
@@ -121,7 +131,7 @@ def main():
     tiers = pd.Series([v['tier'] for v in voters]).value_counts().sort_index().to_dict()
     print(f"graduate rows {len(raw_grad)}, teacher rows {len(raw_teach)}, dual {dual}, "
           f"voters {len(voters)}, with mobile {sum(1 for v in voters if v['mobile'])}, "
-          f"no pin {sum(1 for v in voters if not v['pin'])}, tiers {tiers}")
+          f"no pin {sum(1 for v in voters if not v['pin'])}, possible duplicates {sum(1 for v in voters if v['possible_dup'])}, tiers {tiers}")
 
 
 if __name__ == '__main__':

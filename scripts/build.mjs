@@ -1,7 +1,7 @@
 // Build check for Netlify: the site is static, so this verifies the pieces exist and the function loads.
 import { existsSync, readFileSync } from 'node:fs';
 
-const required = ['public/index.html', 'public/img/siddharth-shirole.jpg', 'public/img/sapna-chhajed.jpg', 'public/img/anand-chhajed.jpg', 'netlify/functions/api.mjs', 'lib/schema.mjs'];
+const required = ['public/index.html', 'public/img/siddharth-shirole.jpg', 'public/img/sapna-chhajed.jpg', 'public/img/anand-chhajed.jpg', 'public/img/smita-jadhav.jpg', 'public/img/kaustubh-gawade.jpg', 'netlify/functions/api.mjs', 'lib/schema.mjs'];
 const missing = required.filter((f) => !existsSync(f));
 if (missing.length) throw new Error(`Missing files: ${missing.join(', ')}`);
 
@@ -11,5 +11,5 @@ if (typeof mod.default !== 'function' || mod.config?.path !== '/api/*') throw ne
 const html = readFileSync('public/index.html', 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
 new Function(script); // throws on a syntax error in the page script
-if (!html.includes('Developed by <b>Sai Randive</b>')) throw new Error('Credit line missing');
+if (!html.includes('Developed by <b>Sai Randive</b> (Sarchitnis, BJYM, Ch. Shivajinagar Uttar Mandal)')) throw new Error('Credit line missing');
 console.log('Build OK:', required.length, 'files checked, API function and page script parse');

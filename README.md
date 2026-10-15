@@ -3,7 +3,9 @@
 Calling desk for the 209 Chhatrapati Shivajinagar graduate & teacher voter lists. Volunteers log in, call voters pin code by pin code, and tap the outcome. The Adhyaksh dashboard shows live progress.
 
 Under the guidance of **Siddharth Shirole** (MLA, Chhatrapati Shivajinagar), **Sapna Chhajed** (Corporator, Pune Municipal Corporation) and **Anand Chhajed** (Uttar Mandal Adhyaksh).
-Developed by **Sai Randive** (Sarchitnis, BJYM).
+Candidates: **Smita Jadhav** (Pune Graduate constituency) and **Kaustubh Gawade** (Pune Teachers constituency).
+
+Developed by **Sai Randive** (Sarchitnis, BJYM, Ch. Shivajinagar Uttar Mandal).
 
 ## How it works
 

@@ -27,7 +27,7 @@ for (const [table, rows] of [['raw_graduate_list', raw_graduate], ['raw_teacher_
 
 const COLS = ['id', 'source', 'part', 'serial', 'name_en', 'name_mr', 'relative', 'address', 'pin', 'education',
   'occupation', 'institution', 'age', 'gender', 'id_card', 'mobile', 'remark', 'teacher_part', 'teacher_serial',
-  'tier', 'raw_row'];
+  'tier', 'raw_row', 'possible_dup'];
 const INT = new Set(['part', 'serial', 'age', 'teacher_part', 'teacher_serial', 'tier', 'raw_row']);
 await chunked(voters, 400, (batch) =>
   sql.query(
@@ -36,6 +36,14 @@ await chunked(voters, 400, (batch) =>
      ON CONFLICT (id) DO UPDATE SET ${COLS.filter((c) => c !== 'id').map((c) => `${c} = EXCLUDED.${c}`).join(', ')}`,
     COLS.map((c) => batch.map((v) => v[c] ?? null))
   ));
+
+// Remove voters that no longer exist after re-matching (only if nobody has logged a call on them).
+await sql.query(
+  `DELETE FROM voters WHERE id <> ALL($1::text[])
+     AND id NOT IN (SELECT voter_id FROM call_logs) AND id NOT IN (SELECT voter_id FROM voter_status)
+     AND id NOT IN (SELECT voter_id FROM claims)`,
+  [voters.map((v) => v.id)]
+);
 
 const [counts] = await sql`SELECT
   (SELECT count(*) FROM raw_graduate_list)::int AS raw_graduate,

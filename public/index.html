@@ -4,300 +4,316 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#14213d">
-<meta name="color-scheme" content="light only">
 <title>Chhatrapati Shivajinagar Calling Desk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* Theme: every colour comes from these tokens, so light and dark both stay readable. */
 :root{
-  color-scheme:light only;
-  --bg:#f3f4f6;--card:#ffffff;--ink:#000000;--ink2:#1c1f26;--ink3:#3a3f4b;--line:#e2e5eb;--hover:#f7f8fa;
-  --brand:#e8730c;--brand-ink:#ffffff;--brand-soft:#fff1e4;--navy:#14213d;--navy2:#1f2f52;--navy-ink:#ffffff;--navy-ink2:#aab4cc;
-  --ok:#1a8f4c;--ok-soft:#e3f4ea;--neu:#5f6675;--neu-soft:#eceef2;--bad:#c53030;--bad-soft:#fbe9e9;
-  --warn:#a86a12;--warn-soft:#fbf0dc;--info:#2a6fc4;--info-soft:#e6effb;--off:#3f4552;--off-soft:#e4e6ea;
-  --bar:#2a78d6;--track:#e9ecf1;
-  --t1:#7b2cbf;--t1s:#f2e8fb;--t2:#c25e06;--t2s:#fff1e4;--t3:#2a6fc4;--t3s:#e6effb;--t4:#5f6675;--t4s:#eceef2;
-  --r:12px;--sh:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08);
+  color-scheme:light dark;
+  --bg:#f2f3f5;--card:#ffffff;--card2:#f7f8fa;--ink:#111318;--ink2:#3b404c;--ink3:#626a79;--line:#dfe2e8;
+  --field:#ffffff;--field-line:#c9ced8;
+  --brand:#e8730c;--brand-ink:#ffffff;--brand-soft:#fff0e2;
+  --top:#14213d;--top-ink:#ffffff;--top-ink2:#b9c3d8;
+  --ok:#17803f;--ok-soft:#e2f3e8;--neu:#545b69;--neu-soft:#eceef2;--bad:#c22f2f;--bad-soft:#fbe8e8;
+  --warn:#9a5d06;--warn-soft:#fcefd8;--info:#2463b0;--info-soft:#e4edfa;--off:#3d4350;--off-soft:#e3e5e9;
+  --bar:#2a78d6;--track:#e6e9ee;
+  --t1:#7027b0;--t1s:#f1e6fb;--t2:#a94f05;--t2s:#fff0e2;--t3:#2463b0;--t3s:#e4edfa;--t4:#545b69;--t4s:#eceef2;
+  --sh:0 1px 2px rgba(16,24,40,.06),0 1px 3px rgba(16,24,40,.08);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0f1115;--card:#191c22;--card2:#1f232a;--ink:#f1f3f6;--ink2:#c9ced8;--ink3:#9aa2b1;--line:#2d323b;
+    --field:#12151a;--field-line:#3a404b;
+    --brand:#f0812a;--brand-soft:#3a2614;
+    --top:#0b1222;--top-ink2:#9fabc4;
+    --ok:#4cc27f;--ok-soft:#173424;--neu:#aab1be;--neu-soft:#272b33;--bad:#f07272;--bad-soft:#3b1c1c;
+    --warn:#e5aa48;--warn-soft:#382912;--info:#72aaf0;--info-soft:#172840;--off:#b9bfca;--off-soft:#2a2e36;
+    --bar:#4a93ea;--track:#2a2f38;
+    --t1:#c393f2;--t1s:#2e1f40;--t2:#f3a663;--t2s:#3a2614;--t3:#72aaf0;--t3s:#172840;--t4:#aab1be;--t4s:#272b33;
+    --sh:0 1px 2px rgba(0,0,0,.45);
+  }
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);color-scheme:light only;font:14px/1.45 Inter,"Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
-button,input,select,textarea{font:inherit;color:inherit}
-.mr{font-family:"Noto Sans Devanagari",Inter,sans-serif}
-.num{font-variant-numeric:tabular-nums}
-[hidden]{display:none!important}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:500;white-space:nowrap;text-decoration:none;color:var(--ink);min-height:38px}
-.btn:hover{background:var(--hover)}
-.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
-.btn.primary:hover{filter:brightness(.95)}
-.btn.ghost{background:transparent;border-color:rgba(255,255,255,.25);color:var(--navy-ink)}
-.btn.ghost:hover{background:rgba(255,255,255,.1)}
-.btn.block{width:100%;padding:12px}
-.btn:disabled{opacity:.6;cursor:default}
-
-.spin{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;display:inline-block;animation:sp .7s linear infinite;flex:none}
-.spin.big{width:42px;height:42px;border-width:4px;color:var(--brand)}
-@keyframes sp{to{transform:rotate(360deg)}}
-.loader{position:fixed;inset:0;z-index:70;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--ink2);text-align:center;padding:16px}
-.loader b{color:var(--ink);font-size:16px}
-/* login */
-#login{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 60%,#3a220c 100%)}
-.lockcard{background:var(--card);border-radius:16px;padding:28px 22px;width:100%;max-width:390px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
-.brandmark{width:46px;height:46px;border-radius:12px;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px;margin-bottom:14px}
-.lockcard h1{font-size:20px;margin:0 0 4px}
-.lockcard p{margin:0 0 18px;color:var(--ink2);font-size:13px}
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);padding:4px;border-radius:10px;margin-bottom:14px}
-.seg button{border:0;background:transparent;padding:9px;border-radius:8px;cursor:pointer;font-weight:600;color:var(--ink2)}
-.seg button.on{background:var(--card);color:var(--ink);box-shadow:var(--sh)}
-.field{display:block;margin-bottom:10px}
-.field span{display:block;font-size:12px;color:var(--ink2);margin-bottom:4px;font-weight:500}
-.field input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:16px;background:var(--card)}
-.err{color:var(--bad);font-size:13px;min-height:18px;margin-top:8px}
-.credit{color:var(--navy-ink2);font-size:12px;margin-top:18px;text-align:center}
-.credit b{color:var(--navy-ink);font-weight:600}
-
-/* login is always light so typed text stays readable in any phone theme */
-#login .lockcard{color-scheme:light only;background:#ffffff;color:#000000}
-#login .lockcard h1{color:#000000}
-#login .lockcard p,#login .field span{color:#1c1f26}
-#login .seg{background:#f0f2f5}
-#login .seg button{color:#1c1f26}
-#login .seg button.on{background:#ffffff;color:#000000}
-#login .field input{background:#ffffff;color:#000000;-webkit-text-fill-color:#000000;caret-color:#e8730c;border-color:#cfd4dc}
-#login .field input::placeholder{color:#5a606c;-webkit-text-fill-color:#5a606c;opacity:1}
-#login .field input:focus{outline:none;border-color:#e8730c;box-shadow:0 0 0 3px rgba(232,115,12,.18)}
-#login .field input:-webkit-autofill{-webkit-box-shadow:0 0 0 40px #ffffff inset;-webkit-text-fill-color:#000000}
-#login .err{color:#c53030}
-/* app form fields: explicit colours from theme tokens */
-.filters select,.filters input,.note{color:var(--ink);-webkit-text-fill-color:var(--ink);background:var(--card)}
-.filters input::placeholder,.note::placeholder{color:var(--ink3);-webkit-text-fill-color:var(--ink3);opacity:1}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,"Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit}
+input,select,textarea{color:var(--ink);-webkit-text-fill-color:var(--ink);background:var(--field);border:1px solid var(--field-line);border-radius:10px;padding:9px 11px;min-height:42px;min-width:0;caret-color:var(--brand)}
+input::placeholder,textarea::placeholder{color:var(--ink3);-webkit-text-fill-color:var(--ink3);opacity:1}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 22%,transparent)}
+input:-webkit-autofill{-webkit-box-shadow:0 0 0 40px var(--field) inset;-webkit-text-fill-color:var(--ink)}
 select option{color:var(--ink);background:var(--card)}
-/* shell */
-header.top{background:var(--navy);color:var(--navy-ink);padding:10px 16px 0;position:sticky;top:0;z-index:20;padding-top:max(10px,env(safe-area-inset-top))}
-.toprow{display:flex;align-items:center;gap:8px}
-.toprow .logo{width:34px;height:34px;border-radius:9px;background:var(--brand);display:grid;place-items:center;font-weight:700;flex:none}
-.toprow h1{font-size:15px;margin:0;flex:1;min-width:0;line-height:1.25}
-.toprow h1 small{display:block;font-weight:400;color:var(--navy-ink2);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sync{font-size:11px;color:var(--navy-ink2);display:flex;align-items:center;gap:5px}
-.dot{width:8px;height:8px;border-radius:50%;background:#3fbf75;flex:none}
-.dot.off{background:#e0a640}
-.tabs{display:flex;gap:2px;overflow-x:auto;margin:10px -16px 0;padding:0 12px;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tabs button{border:0;background:transparent;color:var(--navy-ink2);padding:10px 12px;border-bottom:3px solid transparent;cursor:pointer;font-weight:600;white-space:nowrap;font-size:13px}
-.tabs button.on{color:var(--navy-ink);border-bottom-color:var(--brand)}
-.tabs .cnt{display:inline-block;min-width:20px;padding:0 6px;margin-left:4px;border-radius:10px;background:rgba(255,255,255,.14);font-size:11px;line-height:18px;text-align:center}
-main{max-width:1100px;margin:0 auto;padding:14px 16px 24px}
-footer.foot{text-align:center;color:var(--ink3);font-size:12px;padding:18px 16px calc(24px + env(safe-area-inset-bottom))}
-footer.foot b{color:var(--ink2);font-weight:600}
-
-/* filters */
-.filters{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:10px}
-.filters .row{display:flex;gap:8px;flex-wrap:wrap}
-.filters select,.filters input{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:9px 10px;min-height:40px;font-size:14px;min-width:0}
-.filters input[type=search]{flex:1 1 220px}
-.filters select{flex:1 1 150px}
-#fPin{flex:2 1 260px;font-weight:600}
-.progress{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;margin-bottom:12px;box-shadow:var(--sh)}
-.progress .ph{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-bottom:8px}
-.progress .ph b{color:var(--ink);font-size:15px}
-.track{height:10px;background:var(--track);border-radius:6px;overflow:hidden;display:flex;gap:2px}
-.track i{display:block;height:100%}
-.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink2);margin-top:8px}
-.legend span{display:inline-flex;align-items:center;gap:5px}
-.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
-
-/* voter cards */
-.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px}
-@media (max-width:420px){.list{grid-template-columns:1fr}}
-.vc{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:8px;min-width:0}
-.vc.done{opacity:.86}
-.vh{display:flex;gap:8px;align-items:flex-start}
-.vh .nm{flex:1;min-width:0}
-.vh .nm b{display:block;font-size:15px;line-height:1.3;overflow-wrap:anywhere}
-.vh .nm .mr{color:var(--ink2);font-size:13px}
-.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:600;white-space:nowrap}
+[hidden]{display:none!important}
+.num{font-variant-numeric:tabular-nums}
+.mr{font-family:"Noto Sans Devanagari",Inter,sans-serif}
+.muted{color:var(--ink3)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 14px;min-height:42px;cursor:pointer;font-weight:600;white-space:nowrap;text-decoration:none}
+.btn:hover{background:var(--card2)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn.call{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.small{min-height:34px;padding:5px 10px;font-size:13px}
+.btn.top{background:transparent;color:var(--top-ink);border-color:rgba(255,255,255,.28)}
+.btn.top:hover{background:rgba(255,255,255,.1)}
+.spin{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;display:inline-block;animation:sp .7s linear infinite;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+.pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:600;white-space:nowrap}
 .tier1{background:var(--t1s);color:var(--t1)}.tier2{background:var(--t2s);color:var(--t2)}.tier3{background:var(--t3s);color:var(--t3)}.tier4{background:var(--t4s);color:var(--t4)}
-.meta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;color:var(--ink3)}
-.meta b{color:var(--ink2);font-weight:500}
-.addr{font-size:12.5px;color:var(--ink2);overflow-wrap:anywhere}
-.last{font-size:12px;border-radius:8px;padding:6px 8px}
-.acts{display:flex;gap:6px}
-.acts .btn{flex:1;min-height:42px}
-.btn.call{background:var(--ok);border-color:var(--ok);color:#fff;font-weight:600}
-.btn.wa{color:var(--ok)}
-.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.chip{border:1px solid var(--line);background:var(--card);border-radius:9px;padding:7px 4px;font-size:12px;font-weight:600;cursor:pointer;min-height:36px;color:var(--ink2)}
-.chip:hover{background:var(--hover)}
-.chip.on{color:#fff}
-.note{width:100%;border:1px solid var(--line);border-radius:9px;padding:8px;font-size:13px;resize:vertical;min-height:38px;background:var(--card)}
 .st-S{--c:var(--ok);--cs:var(--ok-soft)}.st-N{--c:var(--neu);--cs:var(--neu-soft)}.st-O{--c:var(--bad);--cs:var(--bad-soft)}
 .st-NA{--c:var(--warn);--cs:var(--warn-soft)}.st-CB{--c:var(--info);--cs:var(--info-soft)}.st-WN{--c:var(--off);--cs:var(--off-soft)}
-.chip.on{background:var(--c);border-color:var(--c)}
-.last[class*=st-]{background:var(--cs);color:var(--ink)}
-.last b{color:var(--c)}
-.more{display:flex;justify-content:center;margin:14px 0}
-.empty{text-align:center;color:var(--ink3);padding:40px 10px;background:var(--card);border:1px dashed var(--line);border-radius:var(--r)}
+.badge{background:var(--cs);color:var(--c)}
 
-/* admin */
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:12px}
-.toolbar h2{font-size:17px;margin:0}
+/* Guidance banner (always white text on saffron) */
+.banner{background:linear-gradient(115deg,#f37a12,#d9620a);color:#fff;border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:18px;box-shadow:0 8px 24px rgba(196,86,10,.22)}
+.banner .lead{flex:1;min-width:0}
+.banner .kick{font-size:12px;font-weight:600;opacity:.95}
+.banner h2{margin:2px 0 0;font-size:17px;line-height:1.3;color:#fff}
+.leaders{display:flex;gap:10px;justify-content:center}
+.leader{display:flex;flex-direction:column;align-items:center;text-align:center;width:120px;min-width:0;color:#fff}
+.leader img{width:72px;height:72px;border-radius:50%;border:3px solid #fff;object-fit:cover;background:#fff2e6;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.leader b{font-size:13px;margin-top:6px;line-height:1.2}
+.leader small{font-size:11px;opacity:.95;line-height:1.25}
+
+/* Candidates */
+.cands{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:440px}
+.cand{display:flex;align-items:center;gap:10px;border-radius:14px;padding:10px;min-width:0}
+.cand img{width:58px;height:58px;border-radius:50%;object-fit:cover;flex:none;border:2px solid var(--brand)}
+.cand .k{font-size:11px;font-weight:700;letter-spacing:.2px;text-transform:uppercase}
+.cand b{display:block;font-size:14.5px;line-height:1.25}
+.cand small{display:block;font-size:11.5px;line-height:1.3}
+#login .cand{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff}
+#login .cand .k{color:#ffc58f}#login .cand small{color:#d5dbe8}
+.candbar{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);color:var(--ink);margin-bottom:10px;box-shadow:var(--sh)}
+.candbar .k{color:var(--brand)}.candbar small{color:var(--ink2)}
+@media (max-width:420px){#login .cands{grid-template-columns:1fr}}
+/* Login */
+#login{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px 16px;background:linear-gradient(160deg,#14213d,#1f2f52 60%,#3a220c)}
+#login .banner{width:100%;max-width:440px;flex-direction:column;text-align:center;gap:10px}
+#login .leaders{width:100%}
+#login .leader{flex:1 1 0;width:auto}
+.lockcard{width:100%;max-width:440px;background:var(--card);color:var(--ink);border-radius:16px;padding:24px 22px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.lockcard h1{font-size:20px;margin:0 0 2px}
+.lockcard p{margin:0 0 16px;color:var(--ink2);font-size:13px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--card2);border:1px solid var(--line);padding:4px;border-radius:12px}
+.seg button{border:0;background:transparent;color:var(--ink2);padding:9px 6px;border-radius:9px;cursor:pointer;font-weight:600;min-height:40px}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:var(--sh)}
+.field{display:block;margin-top:12px}
+.field span{display:block;font-size:12.5px;color:var(--ink2);margin-bottom:4px;font-weight:600}
+.field input{width:100%;font-size:16px}
+.err{color:var(--bad);font-size:13px;min-height:18px;margin-top:8px}
+.credit{color:#c9d1e3;font-size:12.5px;text-align:center;max-width:440px}
+.credit b{color:#fff}
+
+/* App shell */
+header.top{background:var(--top);color:var(--top-ink);position:sticky;top:0;z-index:20;padding:10px 16px 0;padding-top:max(10px,env(safe-area-inset-top))}
+.bar{display:flex;align-items:center;gap:10px;max-width:1240px;margin:0 auto;padding-bottom:10px}
+.bar h1{flex:1;min-width:0;margin:0;font-size:15px;line-height:1.25;color:var(--top-ink)}
+.bar h1 small{display:block;font-weight:400;font-size:12px;color:var(--top-ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--top-ink2)}
+.dot{width:8px;height:8px;border-radius:50%;background:#3fbf75;flex:none;display:inline-block}
+.dot.off{background:#e0a640}.dot.grey{background:#8a92a3}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;max-width:1240px;margin:-2px auto 0;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{border:0;background:transparent;color:var(--top-ink2);padding:10px 12px;border-bottom:3px solid transparent;cursor:pointer;font-weight:600;white-space:nowrap}
+nav.tabs button.on{color:var(--top-ink);border-bottom-color:var(--brand)}
+main{max-width:1240px;margin:0 auto;padding:14px 16px 8px}
+footer.foot{text-align:center;color:var(--ink3);font-size:12.5px;padding:18px 16px calc(22px + env(safe-area-inset-bottom))}
+footer.foot b{color:var(--ink2)}
+main>.banner{margin-bottom:14px}
+
+/* Calling view */
+.cons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.cons button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:10px;cursor:pointer;text-align:left;min-height:58px}
+.cons button b{display:block;font-size:15px}
+.cons button span{font-size:12px;color:var(--ink3)}
+.cons button.on{border-color:var(--brand);background:var(--brand-soft)}
+.findrow{display:flex;gap:8px;margin-bottom:8px}
+.findrow #fPin{flex:0 1 300px;font-weight:600}
+.findrow #fQ{flex:1 1 auto}
+.morefilters{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.subtabs{display:flex;gap:6px;overflow-x:auto;margin:6px 0 10px;scrollbar-width:none;padding-bottom:2px}
+.subtabs::-webkit-scrollbar{display:none}
+.subtabs button{border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:999px;padding:7px 14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.subtabs button.on{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.subtabs .n{font-weight:500;opacity:.8;margin-left:4px}
+.progress{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px;box-shadow:var(--sh)}
+.progress .ph{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-bottom:8px}
+.progress .ph b{color:var(--ink);font-size:15px}
+.track{height:10px;background:var(--track);border-radius:6px;overflow:hidden;display:flex;gap:2px}
+.track i{display:block;height:100%;background:var(--c,var(--bar))}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink2);margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.legend i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+.legend b{color:var(--ink)}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px}
+.vc{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:13px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:7px;min-width:0}
+.vc.mine{border-color:var(--ok);box-shadow:0 0 0 2px color-mix(in srgb,var(--ok) 35%,transparent)}
+.vc.locked{opacity:.75}
+.vh{display:flex;gap:8px;align-items:flex-start}
+.vh .nm{flex:1;min-width:0}
+.vh .nm b{display:block;font-size:15.5px;line-height:1.3;color:var(--ink);overflow-wrap:anywhere}
+.vh .nm .mr{color:var(--ink2);font-size:13.5px}
+.meta{font-size:12.5px;color:var(--ink2);display:flex;flex-wrap:wrap;gap:2px 10px}
+.addr{font-size:12.5px;color:var(--ink3);overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.flag{font-size:12px;border-radius:8px;padding:5px 8px;background:var(--warn-soft);color:var(--ink)}
+.flag.info{background:var(--info-soft)}
+.last{font-size:12.5px;border-radius:8px;padding:6px 9px;background:var(--cs);color:var(--ink)}
+.last b{color:var(--c)}
+.acts{display:flex;gap:8px}
+.acts .btn{flex:1}
+.timer{font-size:13px;font-weight:600;color:var(--ok);display:flex;align-items:center;gap:6px}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.chip{border:1.5px solid var(--c);background:var(--card);color:var(--c);border-radius:10px;padding:8px 4px;font-size:12.5px;font-weight:700;cursor:pointer;min-height:40px}
+.chip:hover,.chip.on{background:var(--c);color:var(--card)}
+.note{width:100%;resize:vertical;min-height:40px;font-size:13px}
+.addnum{display:flex;gap:6px}
+.addnum input{flex:1}
+.more{display:flex;justify-content:center;margin:14px 0}
+.empty{text-align:center;color:var(--ink3);padding:36px 12px;background:var(--card);border:1px dashed var(--line);border-radius:12px}
+.link{background:none;border:0;color:var(--info);cursor:pointer;padding:0;font-weight:600;font-size:12.5px;text-align:left}
+
+/* Adhyaksh views */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:12px}
+.toolbar h2{font-size:18px;margin:0}
 .toolbar .sub{color:var(--ink3);font-size:12px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:12px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;box-shadow:var(--sh)}
-.kpi .l{font-size:12px;color:var(--ink3);font-weight:500}
-.kpi .v{font-size:24px;font-weight:700;margin-top:2px;letter-spacing:-.3px}
-.kpi .s{font-size:12px;color:var(--ink2)}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--sh);margin-bottom:12px;min-width:0}
-.panel h3{font-size:14px;margin:0 0 10px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media (max-width:820px){.grid2{grid-template-columns:1fr}}
-.cols{display:flex;align-items:flex-end;gap:4px;height:150px;padding-top:18px;border-bottom:1px solid var(--line);position:relative}
-.cols .c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;cursor:default;position:relative;min-width:0}
-.cols .c i{display:block;width:70%;max-width:26px;background:var(--bar);border-radius:4px 4px 0 0;min-height:0}
-.cols .c em{font-style:normal;font-size:10px;color:var(--ink3);position:absolute;top:-16px}
-.cols .c:hover i{filter:brightness(1.12)}
-.xlab{display:flex;gap:4px;font-size:10px;color:var(--ink3);margin-top:4px}
-.xlab span{flex:1;text-align:center;min-width:0;overflow:hidden}
+.toolbar .acts2{display:flex;gap:8px;flex-wrap:wrap}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:10px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;box-shadow:var(--sh);min-width:0}
+.kpi .l{font-size:12px;color:var(--ink3);font-weight:600}
+.kpi .v{font-size:25px;font-weight:700;color:var(--ink);letter-spacing:-.3px}
+.kpi .s{font-size:12px;color:var(--ink2);overflow-wrap:anywhere}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--sh);margin-bottom:12px;min-width:0}
+.panel h3{font-size:14.5px;margin:0 0 10px;color:var(--ink)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cols{display:flex;align-items:flex-end;gap:3px;height:150px;padding-top:18px;border-bottom:1px solid var(--line)}
+.cols .c{flex:1;display:flex;align-items:flex-end;justify-content:center;height:100%;position:relative;min-width:0}
+.cols .c i{display:block;width:72%;max-width:24px;background:var(--bar);border-radius:4px 4px 0 0}
+.cols .c em{font-style:normal;font-size:10.5px;color:var(--ink2);position:absolute;top:-16px;font-weight:600}
+.xlab{display:flex;gap:3px;font-size:10.5px;color:var(--ink3);margin-top:4px}
+.xlab span{flex:1;text-align:center;min-width:0;overflow:visible;white-space:nowrap}
 .tablewrap{overflow-x:auto;margin:0 -14px;padding:0 14px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
-th{font-size:11px;color:var(--ink3);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+table{width:100%;border-collapse:collapse;font-size:13px;color:var(--ink)}
+th,td{text-align:left;padding:8px 7px;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top}
+th{font-size:11px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.3px;background:var(--card)}
 td.r,th.r{text-align:right}
+td.wrap{white-space:normal;min-width:180px}
 tr.click{cursor:pointer}
-tr.click:hover td{background:var(--hover)}
+tr.click:hover td{background:var(--card2)}
 .mini{display:flex;align-items:center;gap:6px;min-width:120px}
 .mini .track{height:8px;flex:1;min-width:60px}
-.feed{display:flex;flex-direction:column}
-.feed .it{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;align-items:flex-start}
-.feed .it:last-child{border-bottom:0}
-.feed .when{color:var(--ink3);font-size:11px;white-space:nowrap;min-width:64px}
-.feed .what{flex:1;min-width:0;overflow-wrap:anywhere}
-.tip{position:fixed;pointer-events:none;background:#000;color:#fff;font-size:12px;padding:6px 8px;border-radius:6px;z-index:50;white-space:nowrap;transform:translate(-50%,-110%)}
-.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#000;color:#fff;padding:10px 14px;border-radius:10px;font-size:13px;z-index:60;box-shadow:0 6px 20px rgba(0,0,0,.25);max-width:calc(100% - 32px)}
+.filterbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.filterbar select{flex:1 1 160px}
+.tip{position:fixed;pointer-events:none;background:#111318;color:#fff;font-size:12px;padding:6px 8px;border-radius:6px;z-index:50;white-space:nowrap;transform:translate(-50%,-115%)}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#111318;color:#fff;padding:10px 16px;border-radius:10px;font-size:13.5px;z-index:60;box-shadow:0 6px 20px rgba(0,0,0,.3);max-width:calc(100% - 32px);text-align:center}
+.toast.bad{background:#a32626}
+.loader{position:fixed;inset:0;z-index:70;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--ink2);text-align:center;padding:16px}
+.loader .spin{width:42px;height:42px;border-width:4px;color:var(--brand)}
+.loader b{color:var(--ink);font-size:16px}
 
-/* guidance banner */
-.banner{position:relative;overflow:hidden;border-radius:16px;background:linear-gradient(115deg,#f37a12 0%,#e8730c 38%,#c4560a 100%);color:#fff;padding:16px 18px;display:flex;align-items:center;gap:16px;box-shadow:0 10px 30px rgba(196,86,10,.25)}
-.banner::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08)}
-.banner .lead{flex:1;min-width:0;position:relative;z-index:1}
-.banner .kicker{font-size:11px;letter-spacing:.8px;text-transform:uppercase;opacity:.9;font-weight:600}
-.banner .kicker.mr{letter-spacing:0;text-transform:none;font-size:13px}
-.banner h2{margin:2px 0 0;font-size:17px;line-height:1.3}
-.leaders{display:flex;gap:12px;position:relative;z-index:1;justify-content:center}
-.leader{display:flex;flex-direction:column;align-items:center;text-align:center;width:124px;min-width:0}
-.leader .ph{width:78px;height:78px;border-radius:50%;border:3px solid #fff;background:#fff2e6 center/cover no-repeat;box-shadow:0 4px 14px rgba(0,0,0,.2);display:grid;place-items:center;color:#c4560a;font-weight:700;font-size:22px;overflow:hidden}
-.leader .ph img{width:100%;height:100%;object-fit:cover;display:block}
-.leader b{font-size:13px;margin-top:6px;line-height:1.2}
-.leader small{font-size:11px;opacity:.92;line-height:1.25}
-.login-banner{width:100%;max-width:430px;margin-bottom:14px;flex-direction:column;text-align:center;gap:10px}
-.login-banner .leaders{justify-content:center;width:100%}
-.login-banner .leader{flex:1 1 0;width:auto}
-.login-banner .leader .ph{width:70px;height:70px}
-.app-banner{margin-bottom:14px}
-@media (max-width:640px){
-  .app-banner{flex-direction:column;align-items:stretch;text-align:center;padding:14px 12px}
-  .app-banner .leaders{justify-content:center}
-  .leader{width:auto;flex:1 1 0;max-width:150px}
-  .leader .ph{width:64px;height:64px}
-  .leader b{font-size:12px}
-  .leader small{font-size:10.5px}
-  .banner h2{font-size:15px}
+@media (max-width:900px){
+  .grid2{grid-template-columns:1fr}
+  .morefilters{grid-template-columns:1fr 1fr}
 }
-@media (max-width:560px){
-  main{padding:12px 12px 20px}
-  .toprow h1{font-size:14px}
-  .hide-sm{display:none}
+@media (max-width:640px){
+  main{padding:12px 12px 6px}
+  main>.banner{flex-direction:column;text-align:center;padding:12px;gap:10px}
+  .leader{flex:1 1 0;width:auto}
+  .leader img{width:58px;height:58px}
+  .leader b{font-size:12px}.leader small{font-size:10.5px}
+  .banner h2{font-size:15px}
+  .findrow{flex-direction:column}
+  .findrow #fPin{flex:none}
+  .list{grid-template-columns:1fr}
   .kpi .v{font-size:21px}
-  .filters select{flex:1 1 calc(50% - 4px)}
+  .bar h1{font-size:14px}
+  .hide-sm{display:none}
 }
 </style>
 </head>
 <body>
 
 <section id="login">
-  <div class="banner login-banner">
-    <div class="lead"><div class="kicker mr">यांच्या मार्गदर्शनाखाली</div><h2>Under the guidance of</h2></div>
-    <div class="leaders">
-      <div class="leader"><div class="ph"><img src="img/siddharth-shirole.jpg" alt="Siddharth Shirole"></div><b>Siddharth Shirole</b><small>MLA, Chhatrapati Shivajinagar</small></div>
-      <div class="leader"><div class="ph"><img src="img/sapna-chhajed.jpg" alt="Sapna Chhajed"></div><b>Sapna Chhajed</b><small>Corporator, Pune Municipal Corporation</small></div>
-      <div class="leader"><div class="ph"><img src="img/anand-chhajed.jpg" alt="Anand Chhajed"></div><b>Anand Chhajed</b><small>Uttar Mandal Adhyaksh</small></div>
-    </div>
+  <div class="banner">
+    <div class="lead"><div class="kick mr">यांच्या मार्गदर्शनाखाली · Under the guidance of</div></div>
+    <div class="leaders" data-leaders></div>
+  </div>
+  <div class="cands" id="loginCands"></div>
   <form class="lockcard" id="loginForm" autocomplete="on">
     <h1>Chhatrapati Shivajinagar Calling Desk</h1>
-    <p>Graduate &amp; teacher voter outreach · 209 छत्रपती शिवाजीनगर</p>
-    <div class="seg" role="tablist">
+    <p>Graduate &amp; Teacher voter outreach · <span class="mr">छत्रपती शिवाजीनगर</span></p>
+    <div class="seg">
       <button type="button" class="on" data-mode="caller">Caller</button>
       <button type="button" data-mode="admin">Adhyaksh</button>
     </div>
-    <label class="field" id="nameField"><span>Your name</span>
+    <label class="field" id="nameField"><span>Your full name</span>
       <input id="name" name="name" autocomplete="name" placeholder="e.g. Rahul Patil" maxlength="40"></label>
     <label class="field"><span>Password</span>
-      <input id="pass" name="password" type="password" autocomplete="current-password" placeholder="Password" required></label>
-    <button class="btn primary block" id="loginBtn" type="submit">Log in</button>
+      <input id="pass" name="password" type="password" autocomplete="current-password" placeholder="Password"></label>
+    <button class="btn primary" id="loginBtn" type="submit" style="width:100%;margin-top:14px">Log in</button>
     <div class="err" id="loginErr"></div>
   </form>
-  <div class="credit">Developed by <b>Sai Randive</b> (Sarchitnis, BJYM)</div>
+  <div class="credit">Developed by <b>Sai Randive</b> (Sarchitnis, BJYM, Ch. Shivajinagar Uttar Mandal)</div>
 </section>
 
 <div id="app" hidden>
   <header class="top">
-    <div class="toprow">
-      <div class="logo">शि</div>
+    <div class="bar">
       <h1>Chhatrapati Shivajinagar Calling Desk<small id="who"></small></h1>
-      <span class="sync" id="sync"><span class="dot"></span><span class="hide-sm" id="syncTxt">Live</span></span>
-      <button class="btn ghost" id="logoutBtn">Log out</button>
+      <span class="live"><span class="dot" id="liveDot"></span><span class="hide-sm" id="liveTxt">Live</span></span>
+      <button class="btn top small" id="logoutBtn">Log out</button>
     </div>
-    <nav class="tabs" id="tabs"></nav>
+    <nav class="tabs" id="tabs" hidden></nav>
   </header>
 
   <main>
-    <div class="banner app-banner">
-      <div class="lead"><div class="kicker">Under the guidance of · <span class="mr">यांच्या मार्गदर्शनाखाली</span></div><h2>Chhatrapati Shivajinagar Graduate &amp; Teacher Voter Outreach</h2></div>
-      <div class="leaders">
-      <div class="leader"><div class="ph"><img src="img/siddharth-shirole.jpg" alt="Siddharth Shirole"></div><b>Siddharth Shirole</b><small>MLA, Chhatrapati Shivajinagar</small></div>
-      <div class="leader"><div class="ph"><img src="img/sapna-chhajed.jpg" alt="Sapna Chhajed"></div><b>Sapna Chhajed</b><small>Corporator, Pune Municipal Corporation</small></div>
-      <div class="leader"><div class="ph"><img src="img/anand-chhajed.jpg" alt="Anand Chhajed"></div><b>Anand Chhajed</b><small>Uttar Mandal Adhyaksh</small></div>
+    <div class="banner" id="appBanner">
+      <div class="lead"><div class="kick">Under the guidance of · <span class="mr">यांच्या मार्गदर्शनाखाली</span></div><h2>Chhatrapati Shivajinagar Graduate &amp; Teacher Voter Outreach</h2></div>
+      <div class="leaders" data-leaders></div>
     </div>
-    <!-- calling view -->
+
     <section id="callView" hidden>
-      <div class="filters">
-        <div class="row">
-          <select id="fPin" aria-label="Pin code"></select>
-          <input id="fQ" type="search" placeholder="Search name, mobile, society, school…" aria-label="Search">
-        </div>
-        <div class="row">
-          <select id="fTier" aria-label="Voter type">
-            <option value="">All voter types</option>
-            <option value="1">★ Dual voters (graduate + teacher)</option>
-            <option value="2">Opinion leaders / teachers</option>
-            <option value="3">Professionals / post-graduates</option>
-            <option value="4">General</option>
-          </select>
-          <select id="fPart" aria-label="Part number"></select>
-          <select id="fSort" aria-label="Sort">
-            <option value="smart">Sort: Smart priority</option>
-            <option value="booth">Sort: Part &amp; serial</option>
-            <option value="name">Sort: Name A–Z</option>
-            <option value="age">Sort: Age (older first)</option>
-            <option value="recent">Sort: Last called</option>
-          </select>
-          <select id="fGender" aria-label="Gender">
-            <option value="">All genders</option>
-            <option value="स्त्री">Female</option>
-            <option value="पुरुष">Male</option>
-          </select>
-        </div>
+      <div class="cons" id="cons"></div>
+      <div class="cand candbar" id="candBar"></div>
+      <div class="findrow">
+        <select id="fPin" aria-label="Pin code"></select>
+        <input id="fQ" type="search" placeholder="Search name (English / मराठी / हिंदी), mobile, society, school…" aria-label="Search" autocomplete="off">
+        <button class="btn" id="moreBtnF" type="button">⚙ Filters</button>
       </div>
+      <div class="morefilters" id="moreFilters" hidden>
+        <select id="fTier" aria-label="Voter type">
+          <option value="">All voter types</option>
+          <option value="1">★ Dual voters</option>
+          <option value="2">Opinion leaders / teachers</option>
+          <option value="3">Professionals / PG</option>
+          <option value="4">General</option>
+        </select>
+        <select id="fPart" aria-label="Part number"></select>
+        <select id="fGender" aria-label="Gender">
+          <option value="">All genders</option>
+          <option value="स्त्री">Female · स्त्री</option>
+          <option value="पुरुष">Male · पुरुष</option>
+        </select>
+        <select id="fSort" aria-label="Sort">
+          <option value="smart">Sort: Smart priority</option>
+          <option value="booth">Sort: Part &amp; serial</option>
+          <option value="name">Sort: Name A–Z</option>
+          <option value="school">Sort: School / institution</option>
+          <option value="age">Sort: Age (older first)</option>
+          <option value="recent">Sort: Last called</option>
+        </select>
+      </div>
+      <div class="subtabs" id="subtabs"></div>
       <div class="progress" id="progress"></div>
       <div class="list" id="list"></div>
       <div class="more"><button class="btn" id="moreBtn" hidden>Show more</button></div>
     </section>
 
-    <!-- adhyaksh views -->
     <section id="adminView" hidden>
       <div class="toolbar">
-        <div><h2 id="adminTitle">Overview</h2><div class="sub" id="adminSub"></div></div>
-        <div style="display:flex;gap:8px">
+        <div><h2 id="adminTitle"></h2><div class="sub" id="adminSub"></div></div>
+        <div class="acts2">
           <button class="btn" id="refreshBtn">↻ Refresh</button>
           <button class="btn primary" id="exportBtn">⬇ Export CSV</button>
         </div>
@@ -305,294 +321,429 @@ tr.click:hover td{background:var(--hover)}
       <div id="adminBody"></div>
     </section>
   </main>
-  <footer class="foot">Developed by <b>Sai Randive</b> (Sarchitnis, BJYM)</footer>
+  <footer class="foot">Developed by <b>Sai Randive</b> (Sarchitnis, BJYM, Ch. Shivajinagar Uttar Mandal)</footer>
 </div>
 
-<div class="loader" id="loader" hidden><div class="spin big"></div><b>Loading voter list…</b><span>Please wait a moment</span></div>
+<div class="loader" id="loader" hidden><span class="spin"></span><b>Loading voter list…</b><span>Please wait a moment</span></div>
 <div class="tip" id="tip" hidden></div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
 'use strict';
+const LEADERS=[['siddharth-shirole','Siddharth Shirole','MLA, Chhatrapati Shivajinagar'],['sapna-chhajed','Sapna Chhajed','Corporator, Pune Municipal Corporation'],['anand-chhajed','Anand Chhajed','Uttar Mandal Adhyaksh']];
 const STATUSES=[['S','Supportive','✓'],['N','Neutral','–'],['O','Opposed','✕'],['NA','No answer','☎'],['CB','Call back','↻'],['WN','Wrong / Off','⊘']];
-const STL=Object.fromEntries(STATUSES.map(s=>[s[0],s[1]]));
-const STI=Object.fromEntries(STATUSES.map(s=>[s[0],s[2]]));
-const PENDING=new Set(['NA','CB']);
+const STL=Object.fromEntries(STATUSES.map(s=>[s[0],s[1]])),STI=Object.fromEntries(STATUSES.map(s=>[s[0],s[2]]));
+const FINAL=new Set(['S','N','O','WN']);
+const MIN_SECONDS={S:15,N:15,O:15,CB:8,NA:8,WN:5};
 const TIER={1:['★ Dual voter','tier1'],2:['Opinion leader','tier2'],3:['Professional / PG','tier3'],4:['General','tier4']};
-const PINNAME={'411001':'Pune Camp','411002':'Budhwar Peth','411003':'Khadki','411004':'Deccan Gymkhana','411005':'Chhatrapati Shivajinagar','411006':'Yerawada','411007':'Aundh','411008':'Pashan','411011':'Kasba Peth','411015':'Vishrantwadi','411016':'Model Colony','411020':'Bopodi','411021':'Bavdhan','411027':'Sangvi','411028':'Hadapsar','411030':'Sadashiv Peth','411038':'Kothrud','411044':'Chinchwad','411045':'Baner','411046':'Katraj','411052':'Karvenagar','411057':'Hinjewadi','411058':'Warje'};
-const PAGE=40;
+const PINNAME={'411001':'Pune Camp','411002':'Budhwar Peth','411003':'Khadki','411004':'Deccan Gymkhana','411005':'Shivajinagar','411006':'Yerawada','411007':'Aundh','411008':'Pashan','411011':'Kasba Peth','411015':'Vishrantwadi','411016':'Model Colony','411020':'Bopodi','411021':'Bavdhan','411027':'Sangvi','411028':'Hadapsar','411030':'Sadashiv Peth','411038':'Kothrud','411044':'Chinchwad','411045':'Baner','411046':'Katraj','411052':'Karvenagar','411057':'Hinjewadi','411058':'Warje'};
+const CONS={graduate:['पदवीधर','Pune Graduate constituency'],teacher:['शिक्षक','Pune Teachers constituency']};
+const CANDIDATES={graduate:['smita-jadhav','Smita Jadhav','Pro-Vice Chancellor, Dr D Y Patil University, Pune'],teacher:['kaustubh-gawade','Kaustubh Gawade','CEO, Shri Swami Vivekanand Shikshan Sanstha, Kolhapur']};
+const candHTML=k=>{const [img,n,r]=CANDIDATES[k];return `<img src="img/${img}.jpg" alt="${n}"><div style="min-width:0"><div class="k">Candidate · ${CONS[k][1].replace(' constituency','')} <span class="mr">(${CONS[k][0]})</span></div><b>${n}</b><small>${r}</small></div>`};
+const PAGE=40,SESSION_KEY='scd_session_v2';
 
-const S={token:null,role:null,name:null,voters:[],byId:new Map(),status:{},tab:null,shown:PAGE,stats:null,online:true};
+const S={token:null,role:null,name:null,voters:[],byId:new Map(),status:{},claims:{},cons:'graduate',tab:null,sub:'todo',shown:PAGE,stats:null,notes:{},open:{},log:{caller:'',status:'',range:'today',rows:[],total:0},sessions:null};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=n=>Number(n||0).toLocaleString('en-IN');
 const pct=(a,b)=>b?Math.round(a*100/b):0;
 const store={get(k){try{return localStorage.getItem(k)}catch{return null}},set(k,v){try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch{}}};
+const pinLabel=p=>p?(PINNAME[p]?`${p} · ${PINNAME[p]}`:p):'No pin code';
+const fmtTime=ts=>ts?new Date(ts).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):'—';
+const fmtDur=s=>{s=Math.max(0,Math.round(s||0));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return h?`${h}h ${String(m).padStart(2,'0')}m`:m?`${m}m ${String(x).padStart(2,'0')}s`:`${x}s`};
+function ago(ts){if(!ts)return'—';const s=(Date.now()-new Date(ts))/1000;if(s<60)return'just now';if(s<3600)return Math.floor(s/60)+' min ago';if(s<86400)return Math.floor(s/3600)+' h ago';return fmtTime(ts)}
+function device(ua){ua=ua||'';const os=/Android/.test(ua)?'Android':/iPhone|iPad/.test(ua)?'iPhone':/Windows/.test(ua)?'Windows':/Mac OS/.test(ua)?'Mac':/Linux/.test(ua)?'Linux':'Unknown';const br=/SamsungBrowser/.test(ua)?'Samsung':/Edg\//.test(ua)?'Edge':/Chrome\//.test(ua)?'Chrome':/Firefox\//.test(ua)?'Firefox':/Safari\//.test(ua)?'Safari':'';return br?`${os} · ${br}`:os}
+function toast(msg,bad){const t=$('#toast');t.textContent=msg;t.className='toast'+(bad?' bad':'');t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,bad?4200:2600)}
 
-function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2600)}
-function ago(ts){const s=(Date.now()-new Date(ts))/1000;if(s<60)return'just now';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return new Date(ts).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}
-function pinLabel(p){return p?(PINNAME[p]?`${p} · ${PINNAME[p]}`:p):'No pin code'}
+$('#loginCands').innerHTML=Object.keys(CANDIDATES).map(k=>`<div class="cand">${candHTML(k)}</div>`).join('');
+document.querySelectorAll('[data-leaders]').forEach(el=>el.innerHTML=LEADERS.map(([img,n,r])=>`<div class="leader"><img src="img/${img}.jpg" alt="${n}"><b>${n}</b><small>${r}</small></div>`).join(''));
 
+/* ---------- Smart search: English / Marathi / Hindi, forgiving spelling & spaces ---------- */
+const DEV_C={'क':'k','ख':'kh','ग':'g','घ':'gh','ङ':'n','च':'ch','छ':'chh','ज':'j','झ':'jh','ञ':'n','ट':'t','ठ':'th','ड':'d','ढ':'dh','ण':'n','त':'t','थ':'th','द':'d','ध':'dh','न':'n','प':'p','फ':'ph','ब':'b','भ':'bh','म':'m','य':'y','र':'r','ल':'l','ळ':'l','व':'v','श':'sh','ष':'sh','स':'s','ह':'h'};
+const DEV_V={'अ':'a','आ':'aa','इ':'i','ई':'i','उ':'u','ऊ':'u','ऋ':'ru','ए':'e','ऐ':'ai','ओ':'o','औ':'au','ऑ':'o','ॲ':'e','ा':'a','ि':'i','ी':'i','ु':'u','ू':'u','ृ':'ru','े':'e','ै':'ai','ो':'o','ौ':'au','ॅ':'e','ॉ':'o','ं':'n','ँ':'n','ः':''};
+function translit(w){let o='';for(const ch of w){if(DEV_C[ch]!==undefined)o+=DEV_C[ch];else if(DEV_V[ch]!==undefined)o+=DEV_V[ch];else if(/[a-z0-9]/.test(ch))o+=ch}return o}
+// Consonant skeleton: ignores vowel length and common spelling variants (sh/s, w/v, ee/i, double letters…)
+function skel(latin){
+  let s=latin.toLowerCase().replace(/[^a-z]/g,'');if(!s)return'';
+  s=s.replace(/x/g,'ks').replace(/c+h+/g,'c').replace(/s+h+/g,'s').replace(/ph/g,'f').replace(/([kgjtdb])h/g,'$1').replace(/w/g,'v').replace(/z/g,'j').replace(/q/g,'k').replace(/ck/g,'k').replace(/m(?=[bp])/g,'n');
+  return (s[0]+s.slice(1).replace(/[aeiou]/g,'')).replace(/(.)\1+/g,'$1');
+}
+const DEVDIG='०१२३४५६७८९';
+function norm(s){
+  return String(s??'').toLowerCase().normalize('NFC')
+    .replace(/[०-९]/g,d=>DEVDIG.indexOf(d)).replace(/[\u093C\u200C\u200D]/g,'')
+    .replace(/ी/g,'ि').replace(/ू/g,'ु').replace(/ँ/g,'ं').replace(/ॅ/g,'े').replace(/ॉ/g,'ो')
+    .replace(/[.,/\\()\-_:;'"`]+/g,' ').replace(/\s+/g,' ').trim();
+}
+const keyOf=w=>/[\u0900-\u097F]/.test(w)?skel(translit(w)):skel(w);
+const keys=t=>' '+norm(t).split(' ').map(keyOf).filter(Boolean).join(' ');
+function indexVoter(v){
+  const names=[v.name_en,v.name_mr,v.relative].join(' ');
+  v._n=norm(names);v._nk=keys(names);
+  v._t=norm([names,v.mobile,v.pin,v.address,v.institution,v.education,v.occupation,'part '+v.part,'sr '+v.serial].join(' '));
+  v._k=v._nk+keys([v.address,v.institution].join(' '));
+}
+function compileQuery(q){
+  return norm(q).split(' ').filter(Boolean).map(t=>({t,digits:/^\d+$/.test(t),k:/^\d+$/.test(t)?'':keyOf(t)}));
+}
+// Returns 0 when no match, higher = better (name matches rank first).
+function matchScore(v,qs){
+  let score=0;
+  for(const q of qs){
+    if(q.digits){if(!v._t.replace(/ /g,'').includes(q.t))return 0;score+=2;continue}
+    if(v._n.includes(q.t))score+=4;
+    else if(q.t.length>=3&&v._t.includes(q.t))score+=3.5;
+    else if(q.k.length>=2&&v._nk.includes(' '+q.k))score+=3;
+    else if(v._t.includes(q.t))score+=1;
+    else if(q.k.length>=3&&v._k.includes(' '+q.k))score+=1;
+    else return 0;
+  }
+  return score;
+}
 
-/* api */
+/* ---------- API ---------- */
 async function api(path,opts={}){
-  const r=await fetch('/api/'+path,{...opts,headers:{'content-type':'application/json',...(S.token?{authorization:'Bearer '+S.token}:{}),...(opts.headers||{})}});
-  if(r.status===401&&path!=='login'){logout();throw new Error('Session expired, please log in again')}
+  let r;
+  try{r=await fetch('/api/'+path,{...opts,headers:{'content-type':'application/json',...(S.token?{authorization:'Bearer '+S.token}:{})}})}
+  catch{setLive(false);throw new Error('No internet connection — try again')}
+  if(r.status===401&&path!=='login'){endSession();throw new Error('Session ended — please log in again')}
   const ct=r.headers.get('content-type')||'';
   const body=ct.includes('json')?await r.json():await r.blob();
-  if(!r.ok)throw new Error(body.error||(r.status===404?'Server API not found — deploy the full repo on Netlify, not just index.html':'Request failed ('+r.status+')'));
-  return body;
+  if(!r.ok)throw Object.assign(new Error(body.error||(r.status===404?'Server API not found':'Request failed ('+r.status+')')),{status:r.status});
+  setLive(true);return body;
 }
-function setOnline(ok){S.online=ok;$('#sync .dot').classList.toggle('off',!ok);$('#syncTxt').textContent=ok?'Live':'Offline'}
+function setLive(ok){$('#liveDot').classList.toggle('off',!ok);$('#liveTxt').textContent=ok?'Live':'Offline'}
 
-/* login */
+/* ---------- Login ---------- */
 let loginMode='caller';
 document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{loginMode=b.dataset.mode;document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));$('#nameField').hidden=loginMode==='admin';$('#pass').focus()});
 $('#name').value=store.get('scd_name')||'';
+function setBusy(on,label){const b=$('#loginBtn');b.disabled=on;b.innerHTML=on?`<span class="spin"></span> ${esc(label)}`:'Log in'}
 $('#loginForm').onsubmit=async e=>{
   e.preventDefault();$('#loginErr').textContent='';
-  const name=$('#name').value.trim();
-  if(loginMode==='caller'&&!name){$('#loginErr').textContent='Please enter your name';return}
-  const password=$('#pass').value.trim();
+  const name=$('#name').value.replace(/\s+/g,' ').trim(),password=$('#pass').value.trim();
+  if(loginMode==='caller'&&name.length<2){$('#loginErr').textContent='Please enter your full name';return}
   if(!password){$('#loginErr').textContent='Please enter the password';return}
   setBusy(true,'Logging in…');
   try{
     const r=await api('login',{method:'POST',body:JSON.stringify({password,name:loginMode==='admin'?'Adhyaksh':name})});
     if(loginMode==='caller')store.set('scd_name',name);
-    setBusy(true,'Loading voters…');
     await start(r);
   }catch(err){$('#loginErr').textContent=err.message}
   finally{setBusy(false)}
 };
-function setBusy(on,label){const b=$('#loginBtn');b.disabled=on;b.innerHTML=on?`<span class="spin"></span>${esc(label)}`:'Log in';$('#loader').hidden=!on||label!=='Loading voters…'}
-function logout(){store.set('scd_session',null);S.token=null;clearInterval(S.poll);$('#app').hidden=true;$('#login').hidden=false;$('#pass').value=''}
-$('#logoutBtn').onclick=logout;
+function endSession(){store.set(SESSION_KEY,null);S.token=null;clearInterval(S.poll);clearInterval(S.tick);$('#app').hidden=true;$('#loader').hidden=true;$('#login').hidden=false;$('#pass').value=''}
+$('#logoutBtn').onclick=async()=>{try{await api('logout',{method:'POST',body:'{}'})}catch{}endSession()};
 
 async function start(sess){
   Object.assign(S,{token:sess.token,role:sess.role,name:sess.name});
-  store.set('scd_session',JSON.stringify(sess));
+  store.set(SESSION_KEY,JSON.stringify(sess));
   $('#loader').hidden=false;
-  $('#who').textContent=(S.role==='admin'?'Adhyaksh dashboard · ':'Caller · ')+S.name;
-  $('#list').innerHTML='<div class="empty">Loading voters…</div>';
   try{
     const [v,st]=await Promise.all([api('voters'),api('status')]);
-    S.voters=v.voters;S.byId=new Map(S.voters.map(x=>[x.id,x]));
-    S.status=Object.fromEntries(st.statuses.map(x=>[x.voter_id,x]));
-    setOnline(true);
-  }catch(err){$('#loader').hidden=true;$('#login').hidden=false;$('#app').hidden=true;$('#loginErr').textContent=err.message;return}
+    S.voters=v.voters;S.voters.forEach(indexVoter);S.byId=new Map(S.voters.map(x=>[x.id,x]));
+    applyStatus(st);
+  }catch(err){$('#loader').hidden=true;if(S.token){$('#loginErr').textContent=err.message;endSession()}return}
+  S.shared=new Map();for(const v of S.voters)if(v.mobile)(S.shared.get(v.mobile)||S.shared.set(v.mobile,[]).get(v.mobile)).push(v);
   $('#loader').hidden=true;$('#login').hidden=true;$('#app').hidden=false;
+  $('#who').textContent=(S.role==='admin'?'Adhyaksh dashboard · ':'Caller · ')+S.name;
   buildFilters();buildTabs();
-  setTab(S.role==='admin'?'overview':'todo');
-  clearInterval(S.poll);S.poll=setInterval(poll,20000);
+  setTab(S.role==='admin'?'overview':'calling');
+  clearInterval(S.poll);S.poll=setInterval(poll,15000);
+  clearInterval(S.tick);S.tick=setInterval(tickTimers,1000);
 }
+function applyStatus(st){S.status=Object.fromEntries(st.statuses.map(x=>[x.voter_id,x]));S.claims=Object.fromEntries(st.claims.map(x=>[x.voter_id,x]));S.skew=Date.now()-new Date(st.now)}
 async function poll(){
   if(document.hidden||!S.token)return;
   try{
-    const st=await api('status');S.status=Object.fromEntries(st.statuses.map(x=>[x.voter_id,x]));setOnline(true);
-    if(isCallTab(S.tab))renderCall(false);else{await loadStats();renderAdmin()}
-  }catch{setOnline(false)}
+    applyStatus(await api('status'));
+    if(S.tab==='calling'){if(!document.activeElement?.closest?.('#list'))renderCall()}
+    else await loadAdmin();
+  }catch{}
 }
 
-/* tabs */
-const CALL_TABS=[['todo','To call'],['callback','Call back'],['done','Done'],['nophone','No phone'],['all','All']];
-const ADMIN_TABS=[['overview','Overview'],['pins','Pin codes'],['callers','Callers'],['activity','Activity']];
-const isCallTab=t=>CALL_TABS.some(x=>x[0]===t);
+/* ---------- Tabs ---------- */
+const ADMIN_TABS=[['overview','Dashboard'],['callers','Callers'],['logins','Logins'],['log','Call log'],['pins','Pin codes'],['calling','Calling list']];
 function buildTabs(){
-  const tabs=(S.role==='admin'?ADMIN_TABS:[]).concat(CALL_TABS);
-  $('#tabs').innerHTML=tabs.map(([k,l])=>`<button data-tab="${k}">${l}${isCallTab(k)?`<span class="cnt" data-cnt="${k}">0</span>`:''}</button>`).join('');
-  $('#tabs').onclick=e=>{const b=e.target.closest('button');if(b)setTab(b.dataset.tab)};
+  const nav=$('#tabs');
+  if(S.role!=='admin'){nav.hidden=true;return}
+  nav.hidden=false;nav.innerHTML=ADMIN_TABS.map(([k,l])=>`<button data-tab="${k}">${l}</button>`).join('');
+  nav.onclick=e=>{const b=e.target.closest('button');if(b)setTab(b.dataset.tab)};
 }
 async function setTab(t){
-  S.tab=t;S.shown=PAGE;
+  S.tab=t;
   document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
-  const call=isCallTab(t);
-  $('#callView').hidden=!call;$('#adminView').hidden=call;
-  if(call){renderCall(true)}else{if(!S.stats)$('#adminBody').innerHTML='<div class="empty">Loading…</div>';await loadStats();renderAdmin()}
+  const call=t==='calling';
+  $('#callView').hidden=!call;$('#adminView').hidden=call;$('#appBanner').hidden=S.role==='admin'&&!call&&t!=='overview';
+  if(call){S.shown=PAGE;renderCall()}else{$('#adminBody').innerHTML='<div class="empty"><span class="spin"></span> Loading…</div>';await loadAdmin()}
   window.scrollTo({top:0});
 }
 
-/* filters */
+/* ---------- Calling list ---------- */
+const inCons=(v,c)=>v.source==='both'||v.source===c;
 function buildFilters(){
-  const pins={},parts={};
-  for(const v of S.voters){pins[v.pin||'']=(pins[v.pin||'']||0)+1;parts[v.part]=(parts[v.part]||0)+1}
-  const pinKeys=Object.keys(pins).sort((a,b)=>(a||'999999').localeCompare(b||'999999'));
-  $('#fPin').innerHTML=`<option value="*">All pin codes (${fmt(S.voters.length)})</option>`+pinKeys.map(p=>`<option value="${esc(p)}">${esc(pinLabel(p))} (${pins[p]})</option>`).join('');
-  $('#fPart').innerHTML='<option value="">All parts (भाग)</option>'+Object.keys(parts).sort((a,b)=>a-b).map(p=>`<option value="${p}">Part ${p} (${parts[p]})</option>`).join('');
-  const saved=JSON.parse(store.get('scd_filters')||'{}');
-  for(const [id,val] of Object.entries(saved)){const el=$('#'+id);if(el&&[...(el.options||[])].some(o=>o.value===val))el.value=val}
-  ['fPin','fTier','fPart','fSort','fGender'].forEach(id=>$('#'+id).onchange=()=>{saveFilters();S.shown=PAGE;renderCall(true)});
-  let deb;$('#fQ').oninput=()=>{clearTimeout(deb);deb=setTimeout(()=>{S.shown=PAGE;renderCall(true)},180)};
+  const saved=JSON.parse(store.get('scd_filters_v2')||'{}');
+  if(saved.cons)S.cons=saved.cons;
+  renderConsFilters();
+  for(const [id,val] of Object.entries(saved)){const el=$('#'+id);if(el&&el.tagName==='SELECT'&&[...el.options].some(o=>o.value===val))el.value=val}
+  ['fPin','fTier','fPart','fSort','fGender'].forEach(id=>$('#'+id).onchange=()=>{saveFilters();S.shown=PAGE;renderCall()});
+  let deb;$('#fQ').oninput=()=>{clearTimeout(deb);deb=setTimeout(()=>{S.shown=PAGE;renderCall()},150)};
+  $('#moreBtnF').onclick=()=>{$('#moreFilters').hidden=!$('#moreFilters').hidden};
+  $('#cons').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.cons=b.dataset.cons;$('#fPin').value='*';$('#fPart').value='';saveFilters();renderConsFilters();S.shown=PAGE;renderCall()};
+  $('#subtabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.sub=b.dataset.sub;S.shown=PAGE;renderCall();};
 }
-function saveFilters(){const o={};['fPin','fTier','fPart','fSort','fGender'].forEach(id=>o[id]=$('#'+id).value);store.set('scd_filters',JSON.stringify(o))}
+function renderConsFilters(){
+  const counts={graduate:0,teacher:0};for(const v of S.voters){if(inCons(v,'graduate'))counts.graduate++;if(inCons(v,'teacher'))counts.teacher++}
+  $('#cons').innerHTML=Object.entries(CONS).map(([k,[mr,en]])=>`<button data-cons="${k}" class="${S.cons===k?'on':''}"><b><span class="mr">${mr}</span> · ${k==='graduate'?'Graduate':'Teachers'}</b><span>${fmt(counts[k])} voters · ${CANDIDATES[k][1]}</span></button>`).join('');
+  $('#candBar').innerHTML=candHTML(S.cons);
+  const pins={},parts={};
+  for(const v of S.voters){if(!inCons(v,S.cons))continue;pins[v.pin||'']=(pins[v.pin||'']||0)+1;parts[v.part]=(parts[v.part]||0)+1}
+  const keep=$('#fPin').value;
+  $('#fPin').innerHTML=`<option value="*">All pin codes (${fmt(Object.values(pins).reduce((a,b)=>a+b,0))})</option>`+Object.keys(pins).sort((a,b)=>(a||'9').localeCompare(b||'9')).map(p=>`<option value="${esc(p)}">${esc(pinLabel(p))} (${pins[p]})</option>`).join('');
+  if([...$('#fPin').options].some(o=>o.value===keep))$('#fPin').value=keep;
+  $('#fPart').innerHTML='<option value="">All parts · भाग</option>'+Object.keys(parts).sort((a,b)=>a-b).map(p=>`<option value="${p}">Part ${p} (${parts[p]})</option>`).join('');
+}
+function saveFilters(){const o={cons:S.cons};['fPin','fTier','fPart','fSort','fGender'].forEach(id=>o[id]=$('#'+id).value);store.set('scd_filters_v2',JSON.stringify(o))}
 
+const now=()=>Date.now()-(S.skew||0);
+const activeClaim=id=>{const c=S.claims[id];return c&&new Date(c.expires_at)>now()?c:null};
+const lockedByOther=id=>{const c=activeClaim(id);return c&&c.caller!==S.name?c:null};
 function bucket(v){
   const s=S.status[v.id];
-  if(s&&!PENDING.has(s.status))return'done';
+  if(s&&FINAL.has(s.status))return'done';
   if(s)return'callback';
   return v.mobile?'todo':'nophone';
 }
-function baseFiltered(){
+function filtered(){
   const pin=$('#fPin').value,tier=$('#fTier').value,part=$('#fPart').value,g=$('#fGender').value;
-  const q=$('#fQ').value.trim().toLowerCase();
-  return S.voters.filter(v=>{
-    if(pin!=='*'&&(v.pin||'')!==pin)return false;
-    if(tier&&String(v.tier)!==tier)return false;
-    if(part&&String(v.part)!==part)return false;
-    if(g&&v.gender!==g)return false;
-    if(q){const h=[v.name_en,v.name_mr,v.mobile,v.address,v.institution,v.relative,v.education,v.occupation,v.pin].join(' ').toLowerCase();if(!h.includes(q))return false}
-    return true;
-  });
+  const qs=compileQuery($('#fQ').value);
+  const out=[];
+  for(const v of S.voters){
+    if(!inCons(v,S.cons))continue;
+    if(pin!=='*'&&(v.pin||'')!==pin)continue;
+    if(tier&&String(v.tier)!==tier)continue;
+    if(part&&String(v.part)!==part)continue;
+    if(g&&v.gender!==g)continue;
+    if(qs.length){v._score=matchScore(v,qs);if(!v._score)continue}else v._score=0;
+    out.push(v);
+  }
+  return out;
 }
-function sorted(arr){
-  const m=$('#fSort').value;const c=(a,b)=>a<b?-1:a>b?1:0;
-  const booth=(a,b)=>c(a.part,b.part)||c(a.serial,b.serial);
+function sortList(arr){
+  const m=$('#fSort').value,c=(a,b)=>a<b?-1:a>b?1:0,booth=(a,b)=>c(a.part,b.part)||c(a.serial,b.serial);
   const f={
     smart:(a,b)=>c(!a.mobile,!b.mobile)||c(a.tier,b.tier)||c((S.status[a.id]||{}).attempts||0,(S.status[b.id]||{}).attempts||0)||booth(a,b),
     booth,
     name:(a,b)=>(a.name_en||a.name_mr||'').localeCompare(b.name_en||b.name_mr||''),
+    school:(a,b)=>(a.institution||'~').localeCompare(b.institution||'~')||booth(a,b),
     age:(a,b)=>(b.age||0)-(a.age||0)||booth(a,b),
     recent:(a,b)=>c((S.status[b.id]||{}).updated_at||'',(S.status[a.id]||{}).updated_at||'')||booth(a,b),
   }[m];
-  return arr.sort(f);
+  return arr.sort((a,b)=>(b._score-a._score)||f(a,b));
 }
-
-function renderCall(resetScroll){
-  const base=baseFiltered();
+const SUBS=[['todo','To call'],['callback','Call back'],['done','Done'],['nophone','No phone'],['all','All']];
+function renderCall(){
+  const base=filtered();
   const counts={todo:0,callback:0,done:0,nophone:0,all:base.length};
-  const st={S:0,N:0,O:0,NA:0,CB:0,WN:0};let mine=0;
-  for(const v of base){counts[bucket(v)]++;const s=S.status[v.id];if(s){st[s.status]++;if(s.caller===S.name)mine++}}
-  document.querySelectorAll('[data-cnt]').forEach(el=>el.textContent=fmt(counts[el.dataset.cnt]));
+  const st={S:0,N:0,O:0,NA:0,CB:0,WN:0};let mine=0,phones=0;
+  for(const v of base){const b=bucket(v);if(!(b==='todo'&&lockedByOther(v.id)))counts[b]++;if(v.mobile)phones++;const s=S.status[v.id];if(s){st[s.status]++;if(s.caller===S.name)mine++}}
+  $('#subtabs').innerHTML=SUBS.map(([k,l])=>`<button data-sub="${k}" class="${S.sub===k?'on':''}">${l}<span class="n num">${fmt(counts[k])}</span></button>`).join('');
   const called=Object.values(st).reduce((a,b)=>a+b,0);
-  const phones=base.filter(v=>v.mobile).length;
-  const pinV=$('#fPin').value;
-  $('#progress').innerHTML=`<div class="ph"><span><b class="num">${fmt(called)}</b> of ${fmt(phones)} reachable voters called (${pct(called,phones)}%) · ${pinV==='*'?'all pin codes':esc(pinLabel(pinV))}</span><span>You: <b class="num">${fmt(mine)}</b> here</span></div>
-    <div class="track" role="img" aria-label="Call progress">${STATUSES.map(([k,l])=>st[k]?`<i class="st-${k}" style="width:${st[k]*100/Math.max(phones,1)}%;background:var(--c)" data-tip="${l}: ${st[k]}"></i>`:'').join('')}</div>
-    <div class="legend">${STATUSES.map(([k,l,i])=>`<span class="st-${k}"><i style="background:var(--c)"></i>${i} ${l} <b class="num">${st[k]}</b></span>`).join('')}</div>`;
-  const rows=sorted(S.tab==='all'?base:base.filter(v=>bucket(v)===S.tab));
+  $('#progress').innerHTML=`<div class="ph"><span><b class="num">${fmt(called)}</b> of ${fmt(phones)} voters with a number called (${pct(called,phones)}%)</span><span>Your calls here: <b class="num">${fmt(mine)}</b></span></div>
+    <div class="track">${STATUSES.map(([k,l])=>st[k]?`<i class="st-${k}" style="width:${st[k]*100/Math.max(phones,1)}%" data-tip="${l}: ${st[k]}"></i>`:'').join('')}</div>
+    <div class="legend">${STATUSES.map(([k,l,i])=>`<span class="st-${k}"><i></i>${i} ${l} <b class="num">${st[k]}</b></span>`).join('')}</div>`;
+  let rows=S.sub==='all'?base:base.filter(v=>bucket(v)===S.sub);
+  if(S.sub==='todo')rows=rows.filter(v=>!lockedByOther(v.id));
+  rows=sortList(rows);
+  // Voters I am currently calling always stay on top.
+  rows.sort((a,b)=>(activeClaim(b.id)?.caller===S.name)-(activeClaim(a.id)?.caller===S.name));
   const list=$('#list');
-  if(!rows.length){list.innerHTML=`<div class="empty">${S.tab==='todo'?'Nothing left to call here 🎉 — check “Call back”.':'No voters match these filters.'}</div>`;$('#moreBtn').hidden=true;return}
+  if(!rows.length){list.innerHTML=`<div class="empty">${$('#fQ').value.trim()?'No voter matches this search. Try fewer letters or only the first name.':S.sub==='todo'?'Nothing left to call here 🎉 — check “Call back”.':'No voters here.'}</div>`;$('#moreBtn').hidden=true;return}
   list.innerHTML=rows.slice(0,S.shown).map(card).join('');
-  $('#moreBtn').hidden=rows.length<=S.shown;
-  $('#moreBtn').textContent=`Show more (${fmt(rows.length-S.shown)} left)`;
+  $('#moreBtn').hidden=rows.length<=S.shown;$('#moreBtn').textContent=`Show more (${fmt(rows.length-S.shown)} left)`;
+  tickTimers();
 }
-$('#moreBtn').onclick=()=>{S.shown+=PAGE*2;renderCall(false)};
+$('#moreBtn').onclick=()=>{S.shown+=PAGE*2;renderCall()};
 
 function card(v){
-  const s=S.status[v.id];const [tl,tc]=TIER[v.tier]||TIER[4];
-  const sub=[v.education,v.occupation].filter(Boolean).join(' · ');
-  const tel=v.mobile?`<a class="btn call" href="tel:+91${v.mobile}">📞 ${v.mobile.replace(/(\d{5})(\d{5})/,'$1 $2')}</a><a class="btn wa" href="https://wa.me/91${v.mobile}" target="_blank" rel="noopener" aria-label="WhatsApp">WhatsApp</a>`:'<span class="btn" style="flex:1;cursor:default;color:var(--ink3)">No mobile · meet in person</span>';
-  return `<article class="vc ${s&&!PENDING.has(s.status)?'done':''}" data-id="${esc(v.id)}">
+  const s=S.status[v.id],claim=activeClaim(v.id),other=lockedByOther(v.id),mineNow=claim&&claim.caller===S.name;
+  const [tl,tc]=TIER[v.tier]||TIER[4];
+  const doneByOther=s&&FINAL.has(s.status)&&s.caller!==S.name&&S.role!=='admin';
+  const canFix=s&&s.caller===S.name&&(now()-new Date(s.updated_at))<10*60*1000;
+  const info=[`<b>${esc(v.age??'?')}</b> ${esc(v.gender||'')}`,`Part ${v.part} · Sr ${v.serial}`,`📍 ${esc(v.pin||'—')}`,[v.education,v.occupation].filter(Boolean).map(esc).join(' · ')].filter(Boolean);
+  const flags=[];
+  if(v.source==='both')flags.push(`<div class="flag info">★ Votes in <b>both</b> constituencies — mention both ${CANDIDATES.graduate[1]} (Graduate) and ${CANDIDATES.teacher[1]} (Teachers).</div>`);
+  if(v.possible_dup){const d=S.byId.get(v.possible_dup);flags.push(`<div class="flag">⚠ Possible duplicate entry of ${esc(d?.name_en||d?.name_mr||v.possible_dup)} (Part ${d?.part}/${d?.serial}).</div>`)}
+  const sh=v.mobile&&(S.shared.get(v.mobile)||[]).filter(x=>x.id!==v.id);
+  if(sh&&sh.length)flags.push(`<div class="flag info">📱 Same number as ${sh.map(x=>esc(x.name_en||x.name_mr)).join(', ')} — one call can cover both.</div>`);
+  if(v.remark)flags.push(`<div class="flag">ℹ ${esc(v.remark)}</div>`);
+  let action='';
+  if(other)action=`<div class="flag">🔒 <b>${esc(other.caller)}</b> is calling this voter now.</div>`;
+  else if(doneByOther)action='';
+  else if(!v.mobile)action=`<div class="addnum"><input inputmode="numeric" maxlength="14" placeholder="Found a mobile number? Add it" data-num="${esc(v.id)}"><button class="btn small" data-addnum="${esc(v.id)}">Save</button></div>`;
+  else action=`<div class="acts"><button class="btn call" data-dial="tel" data-id="${esc(v.id)}">📞 ${v.mobile.replace(/(\d{5})(\d{5})/,'$1 $2')}</button><button class="btn" data-dial="wa" data-id="${esc(v.id)}">WhatsApp</button></div>`;
+  let outcome='';
+  if(mineNow)outcome=`<div class="timer"><span class="spin"></span><span data-timer="${esc(v.id)}">Calling…</span></div>
+    <div class="chips">${STATUSES.map(([k,l,i])=>`<button class="chip st-${k}" data-st="${k}" data-id="${esc(v.id)}">${i} ${l}</button>`).join('')}</div>
+    <textarea class="note" rows="1" maxlength="500" placeholder="Note (optional)" data-note="${esc(v.id)}">${esc(S.notes[v.id]||'')}</textarea>
+    <button class="link" data-cancel="${esc(v.id)}">Cancel — I didn’t call</button>`;
+  else if(canFix)outcome=S.open[v.id]?`<div class="chips">${STATUSES.map(([k,l,i])=>`<button class="chip st-${k} ${s.status===k?'on':''}" data-st="${k}" data-id="${esc(v.id)}">${i} ${l}</button>`).join('')}</div>`:`<button class="link" data-fix="${esc(v.id)}">✎ Change my outcome</button>`;
+  return `<article class="vc ${mineNow?'mine':''} ${other?'locked':''}">
     <div class="vh"><div class="nm"><b>${esc(v.name_en||v.name_mr)}</b>${v.name_en?`<span class="mr">${esc(v.name_mr)}</span>`:''}</div><span class="pill ${tc}">${tl}</span></div>
-    <div class="meta"><span><b>${esc(v.age??'?')}</b> ${esc(v.gender||'')}</span><span>Part <b>${v.part}</b> · Sr <b>${v.serial}</b></span><span>📍 <b>${esc(v.pin||'—')}</b></span>${v.source!=='graduate'?'<span>🏫 Teacher list</span>':''}</div>
-    ${sub?`<div class="meta mr">${esc(sub)}</div>`:''}
+    <div class="meta">${info.map(x=>`<span>${x}</span>`).join('')}</div>
     ${v.institution?`<div class="meta">🏫 ${esc(v.institution)}</div>`:''}
-    <div class="addr mr">${esc(v.address)}${v.relative?` · <span style="color:var(--ink3)">Rel: ${esc(v.relative)}</span>`:''}</div>
-    ${v.remark?`<div class="meta">ℹ ${esc(v.remark)}</div>`:''}
-    ${s?`<div class="last st-${s.status}"><b>${STI[s.status]} ${STL[s.status]}</b> · ${esc(s.caller)} · ${ago(s.updated_at)}${s.attempts>1?` · ${s.attempts} attempts`:''}${s.note?`<br>“${esc(s.note)}”`:''}</div>`:''}
-    <div class="acts">${tel}</div>
-    <div class="chips">${STATUSES.map(([k,l,i])=>`<button class="chip st-${k} ${s&&s.status===k?'on':''}" data-st="${k}">${i} ${l}</button>`).join('')}</div>
-    <textarea class="note" placeholder="Note (optional) — saved with the outcome you tap" rows="1" maxlength="500"></textarea>
+    <div class="addr mr">${esc(v.address)}${v.relative?` · Rel: ${esc(v.relative)}`:''}</div>
+    ${flags.join('')}
+    ${s?`<div class="last st-${s.status}"><b>${STI[s.status]} ${STL[s.status]}</b> · by ${esc(s.caller)} · ${ago(s.updated_at)}${s.attempts>1?` · ${s.attempts} calls`:''}${s.note?`<br>“${esc(s.note)}”`:''}</div>`:''}
+    ${action}${outcome}
   </article>`;
 }
+function tickTimers(){
+  document.querySelectorAll('[data-timer]').forEach(el=>{
+    const c=activeClaim(el.dataset.timer);if(!c)return;
+    const sec=Math.floor((now()-new Date(c.dialed_at))/1000);
+    el.textContent=`On call ${fmtDur(sec)} — tap the result after the call`;
+  });
+}
 
+$('#list').addEventListener('input',e=>{const n=e.target.dataset.note;if(n)S.notes[n]=e.target.value});
 $('#list').addEventListener('click',async e=>{
-  const chip=e.target.closest('.chip');if(!chip)return;
-  const el=chip.closest('.vc');const id=el.dataset.id;const status=chip.dataset.st;
-  const note=el.querySelector('.note').value.trim();
-  const prev=S.status[id];
-  S.status[id]={voter_id:id,status,caller:S.name,note:note||prev?.note,attempts:(prev?.attempts||0)+1,updated_at:new Date().toISOString()};
-  el.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c===chip));
-  chip.disabled=true;
-  try{
-    const r=await api('call',{method:'POST',body:JSON.stringify({voter_id:id,status,note})});
-    S.status[id]=r.status;setOnline(true);
-    const v=S.byId.get(id);toast(`${STL[status]} saved · ${v.name_en||v.name_mr}`);
-    renderCall(false);
-  }catch(err){
-    if(prev)S.status[id]=prev;else delete S.status[id];
-    setOnline(false);toast('Not saved: '+err.message);renderCall(false);
+  const t=e.target.closest('button');if(!t)return;
+  if(t.dataset.dial){
+    const id=t.dataset.id,v=S.byId.get(id);
+    const win=t.dataset.dial==='wa'?window.open('about:blank','_blank'):null;
+    t.disabled=true;
+    try{
+      const r=await api('dial',{method:'POST',body:JSON.stringify({voter_id:id})});
+      S.claims[id]=r.claim;
+      if(win)win.location='https://wa.me/91'+v.mobile;else location.href='tel:+91'+v.mobile;
+    }catch(err){if(win)win.close();toast(err.message,true)}
+    renderCall();return;
+  }
+  if(t.dataset.st){
+    const id=t.dataset.id,status=t.dataset.st,c=activeClaim(id);
+    if(c&&c.caller===S.name){const wait=MIN_SECONDS[status]-Math.floor((now()-new Date(c.dialed_at))/1000);if(wait>0){toast(`Finish the call first — you can save this in ${wait} s`,true);return}}
+    t.disabled=true;
+    try{
+      const r=await api('call',{method:'POST',body:JSON.stringify({voter_id:id,status,note:S.notes[id]||''})});
+      S.status[id]=r.status;delete S.claims[id];delete S.notes[id];delete S.open[id];
+      const v=S.byId.get(id);toast(`${r.corrected?'Changed to':'Saved:'} ${STL[status]} · ${v.name_en||v.name_mr}`);
+    }catch(err){toast(err.message,true)}
+    renderCall();return;
+  }
+  if(t.dataset.cancel){const id=t.dataset.cancel;try{await api('release',{method:'POST',body:JSON.stringify({voter_id:id})})}catch{}delete S.claims[id];renderCall();return}
+  if(t.dataset.fix){S.open[t.dataset.fix]=true;renderCall();return}
+  if(t.dataset.addnum){
+    const id=t.dataset.addnum,inp=document.querySelector(`[data-num="${CSS.escape(id)}"]`);
+    try{const r=await api('mobile',{method:'POST',body:JSON.stringify({voter_id:id,mobile:inp.value})});const v=S.byId.get(id);v.mobile=r.voter.mobile;v.added=true;indexVoter(v);toast('Number saved — voter moved to “To call”')}
+    catch(err){toast(err.message,true)}
+    renderCall();
   }
 });
 
-/* admin */
-async function loadStats(){try{S.stats=await api('stats');setOnline(true)}catch(err){setOnline(false);toast(err.message)}}
-$('#refreshBtn').onclick=async()=>{await loadStats();renderAdmin();toast('Updated')};
+/* ---------- Adhyaksh ---------- */
+$('#refreshBtn').onclick=async()=>{await loadAdmin();toast('Updated')};
 $('#exportBtn').onclick=async()=>{
   try{const blob=await api('export');const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`chhatrapati-shivajinagar-calling-${new Date().toISOString().slice(0,10)}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
-  catch(err){toast(err.message)}
+  catch(err){toast(err.message,true)}
 };
-function statusBar(counts,total){
-  return `<div class="track" style="height:14px">${STATUSES.map(([k,l])=>counts[k]?`<i class="st-${k}" style="width:${counts[k]*100/Math.max(total,1)}%;background:var(--c)" data-tip="${l}: ${fmt(counts[k])} (${pct(counts[k],total)}%)"></i>`:'').join('')}</div>`;
+async function loadAdmin(){
+  try{
+    if(S.tab==='logins')S.sessions=(await api('sessions')).sessions;
+    if(S.tab==='log'){const l=S.log;const r=await api(`calls?caller=${encodeURIComponent(l.caller)}&status=${l.status}&range=${l.range}`);l.rows=r.rows;l.total=r.total}
+    S.stats=await api('stats');
+  }catch(err){toast(err.message,true)}
+  if(S.tab!=='calling')renderAdmin();
+}
+const kpi=(l,v,s,c)=>`<div class="kpi"><div class="l">${l}</div><div class="v num"${c?` style="color:${c}"`:''}>${v}</div><div class="s">${s}</div></div>`;
+const mini=(a,b)=>`<div class="mini"><div class="track"><i style="width:${pct(a,b)}%"></i></div><span class="num" style="font-size:12px;color:var(--ink2);min-width:36px;text-align:right">${pct(a,b)}%</span></div>`;
+function statusBar(counts,total){return `<div class="track" style="height:14px">${STATUSES.map(([k,l])=>counts[k]?`<i class="st-${k}" style="width:${counts[k]*100/Math.max(total,1)}%" data-tip="${l}: ${fmt(counts[k])} (${pct(counts[k],total)}%)"></i>`:'').join('')}</div>
+  <div class="legend">${STATUSES.map(([k,l,i])=>`<span class="st-${k}"><i></i>${i} ${l} <b class="num">${fmt(counts[k]||0)}</b></span>`).join('')}</div>`}
+function columns(rows,label,every){
+  const max=Math.max(1,...rows.map(r=>r.n));
+  return `<div class="cols">${rows.map(r=>`<div class="c" data-tip="${label(r)}: ${fmt(r.n)} calls">${r.n===max&&r.n?`<em class="num">${r.n}</em>`:''}<i style="height:${r.n*100/max}%"></i></div>`).join('')}</div>
+  <div class="xlab">${rows.map((r,i)=>`<span>${i%every===0?label(r):''}</span>`).join('')}</div>`;
 }
 function renderAdmin(){
   const d=S.stats;if(!d)return;const t=d.totals;
-  const titles={overview:'Overview',pins:'Pin code progress',callers:'Caller performance',activity:'Live activity'};
+  const titles={overview:'Dashboard',callers:'Callers — who did how much',logins:'Logins — who logged in, when, how long',log:'Call log — every call',pins:'Pin code progress'};
   $('#adminTitle').textContent=titles[S.tab];
-  $('#adminSub').textContent=`Updated ${new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})} · auto-refreshes every 20s`;
+  $('#adminSub').textContent=`Updated ${new Date().toLocaleTimeString('en-IN',{hour:'numeric',minute:'2-digit'})} · refreshes every 15 s`;
   const sc=Object.fromEntries(d.byStatus.map(x=>[x.status,x.n]));
   let h='';
   if(S.tab==='overview'){
+    const cons=Object.fromEntries(d.byCons.map(x=>[x.cons,x]));
     h+=`<div class="kpis">
-      ${kpi('Total voters',fmt(t.voters),`${fmt(t.with_mobile)} with mobile`)}
-      ${kpi('Called',fmt(t.called),`${pct(t.called,t.with_mobile)}% of reachable`)}
-      ${kpi('Reached',fmt(t.reached),'answered the call')}
+      ${kpi('Online now',fmt(t.online),`${fmt(t.calling_now)} on a call right now`,'var(--ok)')}
+      ${kpi('Calls today',fmt(t.calls_today),`${fmt(t.total_calls)} calls in total`)}
+      ${kpi('Voters called',fmt(t.called),`${pct(t.called,t.with_mobile)}% of ${fmt(t.with_mobile)} with a number`)}
+      ${kpi('Reached',fmt(t.reached),'picked up and spoke')}
       ${kpi('Supportive',fmt(sc.S||0),`${pct(sc.S||0,t.reached)}% of reached`,'var(--ok)')}
-      ${kpi('Neutral',fmt(sc.N||0),'need follow-up','var(--neu)')}
       ${kpi('Opposed',fmt(sc.O||0),`${pct(sc.O||0,t.reached)}% of reached`,'var(--bad)')}
       ${kpi('Pending',fmt((sc.NA||0)+(sc.CB||0)),'no answer + call back','var(--warn)')}
-      ${kpi('Calls today',fmt(t.calls_today),`${fmt(t.total_calls)} total · ${t.callers} callers`)}
+      ${kpi('Callers',fmt(t.callers),`${fmt(t.numbers_added)} new numbers added`)}
     </div>
-    <div class="panel"><h3>Response breakdown · ${fmt(t.called)} voters called</h3>${statusBar(sc,t.called)}
-      <div class="legend">${STATUSES.map(([k,l,i])=>`<span class="st-${k}"><i style="background:var(--c)"></i>${i} ${l} <b class="num">${fmt(sc[k]||0)}</b></span>`).join('')}</div></div>
+    <div class="grid2">${['graduate','teacher'].map(k=>{const c=cons[k]||{total:0,with_mobile:0,called:0,s:0,o:0};return `<div class="panel"><h3><span class="mr">${CONS[k][0]}</span> · ${CONS[k][1]} <span class="muted" style="font-weight:500">— Candidate: ${CANDIDATES[k][1]}</span></h3>
+      <div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--ink2);margin-bottom:6px"><span><b style="color:var(--ink)">${fmt(c.called)}</b> of ${fmt(c.with_mobile)} with a number called</span><span>${fmt(c.total)} voters</span></div>
+      ${mini(c.called,c.with_mobile)}<div class="legend"><span class="st-S"><i></i>Supportive <b>${fmt(c.s)}</b></span><span class="st-O"><i></i>Opposed <b>${fmt(c.o)}</b></span><span class="muted">${fmt(c.total-c.with_mobile)} have no number</span></div></div>`}).join('')}</div>
+    <div class="panel"><h3>Response breakdown · ${fmt(t.called)} voters called</h3>${statusBar(sc,t.called)}</div>
     <div class="grid2">
-      <div class="panel"><h3>Calls per day · last 14 days</h3>${daily(d.daily)}</div>
-      <div class="panel"><h3>Coverage by voter type</h3><div class="tablewrap"><table><thead><tr><th>Type</th><th class="r">Voters</th><th class="r">Called</th><th>Progress</th><th class="r">Supportive</th></tr></thead><tbody>
+      <div class="panel"><h3>Calls by hour · today</h3>${columns(d.hourly,r=>{const h=r.hour%12||12;return h+(r.hour<12?'am':'pm')},3)}</div>
+      <div class="panel"><h3>Calls per day · last 14 days</h3>${columns(d.daily,r=>new Date(r.day).toLocaleDateString('en-IN',{day:'numeric',month:'short'}),3)}</div>
+    </div>
+    <div class="grid2">
+      <div class="panel"><h3>Top callers</h3>${callerTable(d.byCaller.filter(c=>c.calls).slice(0,6),true)}</div>
+      <div class="panel"><h3>Coverage by voter type</h3><div class="tablewrap"><table><thead><tr><th>Type</th><th class="r">Voters</th><th class="r">Called</th><th>Progress</th><th class="r">✓</th></tr></thead><tbody>
         ${d.byTier.map(r=>`<tr><td><span class="pill ${TIER[r.tier][1]}">${TIER[r.tier][0]}</span></td><td class="r num">${fmt(r.total)}</td><td class="r num">${fmt(r.called)}</td><td>${mini(r.called,r.total)}</td><td class="r num">${fmt(r.s)}</td></tr>`).join('')}
       </tbody></table></div></div>
-    </div>
-    <div class="grid2">
-      <div class="panel"><h3>Top pin codes</h3>${pinTable(d.byPin.slice(0,8))}</div>
-      <div class="panel"><h3>Top callers</h3>${callerTable(d.byCaller.slice(0,8))}</div>
     </div>`;
+  }else if(S.tab==='callers'){
+    h+=`<div class="panel"><h3>${d.byCaller.length} people · tap a row to see their calls</h3>${callerTable(d.byCaller,false)}</div>`;
+  }else if(S.tab==='logins'){
+    const ss=S.sessions||[];const on=ss.filter(x=>x.online);
+    h+=`<div class="kpis">${kpi('Online now',fmt(on.length),on.map(x=>esc(x.name)).join(', ')||'nobody','var(--ok)')}${kpi('Logins today',fmt(ss.filter(x=>new Date(x.login_at).toDateString()===new Date().toDateString()).length),'sessions started today')}${kpi('People',fmt(new Set(ss.map(x=>x.name)).size),'different names logged in')}</div>
+    <div class="panel"><h3>Login history (latest 300)</h3>${ss.length?`<div class="tablewrap"><table><thead><tr><th>Status</th><th>Name</th><th>Role</th><th>Logged in</th><th>Last active</th><th class="r">Time spent</th><th class="r">Calls</th><th>Device</th></tr></thead><tbody>
+      ${ss.map(x=>`<tr><td>${x.online?'<span class="pill badge st-S">● Online</span>':x.ended_at?'<span class="pill badge st-N">Logged out</span>':'<span class="pill badge st-NA">Idle</span>'}</td><td><b>${esc(x.name)}</b></td><td>${x.role==='admin'?'Adhyaksh':'Caller'}</td><td>${fmtTime(x.login_at)}</td><td>${ago(x.last_seen)}</td><td class="r num">${fmtDur(x.secs)}</td><td class="r num">${fmt(x.calls)}</td><td class="muted">${esc(device(x.user_agent))}</td></tr>`).join('')}
+    </tbody></table></div>`:'<div class="empty">No logins yet.</div>'}</div>`;
+  }else if(S.tab==='log'){
+    const l=S.log;
+    h+=`<div class="filterbar">
+      <select id="lCaller"><option value="">All callers</option>${d.byCaller.filter(c=>c.calls).map(c=>`<option ${c.caller===l.caller?'selected':''}>${esc(c.caller)}</option>`).join('')}</select>
+      <select id="lStatus"><option value="">All outcomes</option>${STATUSES.map(([k,lb])=>`<option value="${k}" ${k===l.status?'selected':''}>${lb}</option>`).join('')}</select>
+      <select id="lRange">${[['today','Today'],['yesterday','Yesterday'],['7d','Last 7 days'],['all','All time']].map(([k,lb])=>`<option value="${k}" ${k===l.range?'selected':''}>${lb}</option>`).join('')}</select>
+    </div>
+    <div class="panel"><h3>${fmt(l.total)} calls${l.total>l.rows.length?` · showing latest ${l.rows.length}`:''}</h3>${l.rows.length?`<div class="tablewrap"><table><thead><tr><th>Time</th><th>Caller</th><th>Voter</th><th>Mobile</th><th>Pin</th><th>Outcome</th><th class="r">Call time</th><th>Note</th></tr></thead><tbody>
+      ${l.rows.map(r=>`<tr><td>${fmtTime(r.created_at)}</td><td><b>${esc(r.caller)}</b></td><td class="wrap">${esc(r.name_en||r.name_mr)}${r.name_en?`<br><span class="muted mr">${esc(r.name_mr)}</span>`:''}</td><td class="num">${esc(r.mobile||'—')}</td><td>${esc(r.pin||'—')}</td><td><span class="pill badge st-${r.status}">${STI[r.status]} ${STL[r.status]}</span></td><td class="r num">${r.secs!=null?fmtDur(r.secs):'—'}</td><td class="wrap">${esc(r.note||'')}</td></tr>`).join('')}
+    </tbody></table></div>`:'<div class="empty">No calls for these filters.</div>'}</div>`;
   }else if(S.tab==='pins'){
     h+=`<div class="panel"><h3>All pin codes · tap a row to open its calling list</h3>${pinTable(d.byPin)}</div>`;
-  }else if(S.tab==='callers'){
-    h+=`<div class="panel"><h3>${d.byCaller.length} callers</h3>${d.byCaller.length?callerTable(d.byCaller):'<div class="empty">No calls logged yet.</div>'}</div>`;
-  }else{
-    h+=`<div class="panel"><h3>Latest 40 calls</h3>${d.recent.length?`<div class="feed">${d.recent.map(r=>`<div class="it"><span class="when">${ago(r.created_at)}</span><span class="what"><b>${esc(r.caller)}</b> → ${esc(r.name_en||r.name_mr)} <span style="color:var(--ink3)">(${esc(r.pin||'—')})</span>${r.note?`<br><span style="color:var(--ink2)">“${esc(r.note)}”</span>`:''}</span><span class="pill st-${r.status}" style="background:var(--cs);color:var(--c)">${STI[r.status]} ${STL[r.status]}</span></div>`).join('')}</div>`:'<div class="empty">No calls logged yet.</div>'}</div>`;
   }
   $('#adminBody').innerHTML=h;
-  $('#adminBody').querySelectorAll('tr[data-pin]').forEach(tr=>tr.onclick=()=>{$('#fPin').value=tr.dataset.pin==='No pin'?'':tr.dataset.pin;saveFilters();setTab('todo')});
+  if(S.tab==='log'){const l=S.log;[['lCaller','caller'],['lStatus','status'],['lRange','range']].forEach(([id,k])=>$('#'+id).onchange=e=>{l[k]=e.target.value;loadAdmin()})}
+  $('#adminBody').querySelectorAll('tr[data-caller]').forEach(tr=>tr.onclick=()=>{S.log.caller=tr.dataset.caller;S.log.range='all';setTab('log')});
+  $('#adminBody').querySelectorAll('tr[data-pin]').forEach(tr=>tr.onclick=()=>{S.cons='graduate';renderConsFilters();$('#fPin').value=tr.dataset.pin==='No pin'?'':tr.dataset.pin;S.sub='todo';saveFilters();setTab('calling')});
 }
-const kpi=(l,v,s,c)=>`<div class="kpi"><div class="l">${l}</div><div class="v num"${c?` style="color:${c}"`:''}>${v}</div><div class="s">${s}</div></div>`;
-const mini=(a,b)=>`<div class="mini"><div class="track"><i style="width:${pct(a,b)}%;background:var(--bar)"></i></div><span class="num" style="font-size:12px;color:var(--ink2);min-width:34px;text-align:right">${pct(a,b)}%</span></div>`;
-function pinTable(rows){
-  return `<div class="tablewrap"><table><thead><tr><th>Pin code</th><th class="r">Voters</th><th class="r">Mobile</th><th class="r">Called</th><th>Progress</th><th class="r">✓</th><th class="r">–</th><th class="r">✕</th><th class="r">Pending</th></tr></thead><tbody>
-  ${rows.map(r=>`<tr class="click" data-pin="${esc(r.pin)}"><td><b>${esc(r.pin)}</b> <span style="color:var(--ink3)">${esc(PINNAME[r.pin]||'')}</span></td><td class="r num">${fmt(r.total)}</td><td class="r num">${fmt(r.with_mobile)}</td><td class="r num">${fmt(r.called)}</td><td>${mini(r.called,r.with_mobile)}</td><td class="r num" style="color:var(--ok)">${r.s}</td><td class="r num">${r.n}</td><td class="r num" style="color:var(--bad)">${r.o}</td><td class="r num">${r.pending}</td></tr>`).join('')}
-  </tbody></table></div>`;
-}
-function callerTable(rows){
+function callerTable(rows,short){
   if(!rows.length)return'<div class="empty">No calls logged yet.</div>';
-  return `<div class="tablewrap"><table><thead><tr><th>#</th><th>Caller</th><th class="r">Calls</th><th class="r">Voters</th><th class="r">Today</th><th class="r">Supportive</th><th>Last call</th></tr></thead><tbody>
-  ${rows.map((r,i)=>`<tr><td class="num">${i+1}</td><td><b>${esc(r.caller)}</b></td><td class="r num">${fmt(r.calls)}</td><td class="r num">${fmt(r.voters)}</td><td class="r num">${fmt(r.today)}</td><td class="r num" style="color:var(--ok)">${fmt(r.s)}</td><td style="color:var(--ink3)">${ago(r.last_call)}</td></tr>`).join('')}
+  return `<div class="tablewrap"><table><thead><tr><th>Caller</th><th class="r">Calls</th><th class="r">Today</th>${short?'':'<th class="r">Voters</th>'}<th class="r" style="color:var(--ok)">✓</th><th class="r">–</th><th class="r" style="color:var(--bad)">✕</th>${short?'':'<th class="r">☎</th><th class="r">↻</th><th class="r">⊘</th><th class="r">Avg talk</th><th class="r">Time online</th><th class="r">Logins</th><th>First call</th>'}<th>Last call</th></tr></thead><tbody>
+  ${rows.map(r=>`<tr class="click" data-caller="${esc(r.caller)}"><td><span class="dot ${r.online?'':'grey'}"></span> <b>${esc(r.caller)}</b></td><td class="r num"><b>${fmt(r.calls)}</b></td><td class="r num">${fmt(r.today)}</td>${short?'':`<td class="r num">${fmt(r.voters)}</td>`}<td class="r num" style="color:var(--ok)">${r.s}</td><td class="r num">${r.n}</td><td class="r num" style="color:var(--bad)">${r.o}</td>${short?'':`<td class="r num">${r.na}</td><td class="r num">${r.cb}</td><td class="r num">${r.wn}</td><td class="r num">${r.avg_secs!=null?fmtDur(r.avg_secs):'—'}</td><td class="r num">${fmtDur(r.online_secs)}</td><td class="r num">${r.logins}</td><td>${fmtTime(r.first_call)}</td>`}<td>${ago(r.last_call)}</td></tr>`).join('')}
   </tbody></table></div>`;
 }
-function daily(rows){
-  const max=Math.max(1,...rows.map(r=>r.n));
-  const lab=r=>new Date(r.day).toLocaleDateString('en-IN',{day:'numeric',month:'short'});
-  return `<div class="cols">${rows.map((r,i)=>`<div class="c" data-tip="${lab(r)}: ${fmt(r.n)} calls">${r.n&&(i===rows.length-1||r.n===max)?`<em class="num">${r.n}</em>`:''}<i style="height:${r.n*100/max}%"></i></div>`).join('')}</div>
-    <div class="xlab">${rows.map((r,i)=>`<span>${i%2===rows.length%2?'':lab(r).split(' ')[0]}</span>`).join('')}</div>`;
+function pinTable(rows){
+  return `<div class="tablewrap"><table><thead><tr><th>Pin code</th><th class="r">Voters</th><th class="r">With no.</th><th class="r">Called</th><th>Progress</th><th class="r">✓</th><th class="r">–</th><th class="r">✕</th><th class="r">Pending</th></tr></thead><tbody>
+  ${rows.map(r=>`<tr class="click" data-pin="${esc(r.pin)}"><td><b>${esc(r.pin)}</b> <span class="muted">${esc(PINNAME[r.pin]||'')}</span></td><td class="r num">${fmt(r.total)}</td><td class="r num">${fmt(r.with_mobile)}</td><td class="r num">${fmt(r.called)}</td><td>${mini(r.called,r.with_mobile)}</td><td class="r num" style="color:var(--ok)">${r.s}</td><td class="r num">${r.n}</td><td class="r num" style="color:var(--bad)">${r.o}</td><td class="r num">${r.pending}</td></tr>`).join('')}
+  </tbody></table></div>`;
 }
 
-/* hover tooltips for chart marks */
+/* chart hover tooltips */
 document.addEventListener('pointermove',e=>{
-  const el=e.target.closest&&e.target.closest('[data-tip]');const tip=$('#tip');
+  const el=e.target.closest&&e.target.closest('[data-tip]'),tip=$('#tip');
   if(!el){tip.hidden=true;return}
   tip.textContent=el.dataset.tip;tip.hidden=false;tip.style.left=e.clientX+'px';tip.style.top=e.clientY+'px';
 });
 
 /* resume session */
-(function(){const s=store.get('scd_session');if(s){try{start(JSON.parse(s))}catch{logout()}}})();
+(function(){try{localStorage.removeItem('scd_session')}catch{}const s=store.get(SESSION_KEY);if(s){try{start(JSON.parse(s))}catch{endSession()}}})();
 </script>
 </body>
 </html>
