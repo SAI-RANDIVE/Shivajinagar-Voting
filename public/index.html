@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#14213d">
-<title>Shivajinagar Calling Desk</title>
+<title>Chhatrapati Shivajinagar Calling Desk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600&display=swap" rel="stylesheet">
@@ -57,6 +57,11 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn.block{width:100%;padding:12px}
 .btn:disabled{opacity:.6;cursor:default}
 
+.spin{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;display:inline-block;animation:sp .7s linear infinite;flex:none}
+.spin.big{width:42px;height:42px;border-width:4px;color:var(--brand)}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loader{position:fixed;inset:0;z-index:70;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--ink2);text-align:center;padding:16px}
+.loader b{color:var(--ink);font-size:16px}
 /* login */
 #login{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 60%,#3a220c 100%)}
 .lockcard{background:var(--card);border-radius:16px;padding:28px 22px;width:100%;max-width:390px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
@@ -218,14 +223,13 @@ tr.click:hover td{background:var(--hover)}
   <div class="banner login-banner">
     <div class="lead"><div class="kicker mr">यांच्या मार्गदर्शनाखाली</div><h2>Under the guidance of</h2></div>
     <div class="leaders">
-      <div class="leader"><div class="ph"><img src="img/siddharth-shirole.jpg" alt="Siddharth Shirole"></div><b>Siddharth Shirole</b><small>MLA, Shivajinagar</small></div>
+      <div class="leader"><div class="ph"><img src="img/siddharth-shirole.jpg" alt="Siddharth Shirole"></div><b>Siddharth Shirole</b><small>MLA, Chhatrapati Shivajinagar</small></div>
       <div class="leader"><div class="ph"><img src="img/sapna-chhajed.jpg" alt="Sapna Chhajed"></div><b>Sapna Chhajed</b><small>Corporator, Pune Municipal Corporation</small></div>
       <div class="leader"><div class="ph"><img src="img/anand-chhajed.jpg" alt="Anand Chhajed"></div><b>Anand Chhajed</b><small>Uttar Mandal Adhyaksh</small></div>
     </div>
   <form class="lockcard" id="loginForm" autocomplete="on">
-    <div class="brandmark">शि</div>
-    <h1>Shivajinagar Calling Desk</h1>
-    <p>Graduate &amp; teacher voter outreach · 209 शिवाजीनगर</p>
+    <h1>Chhatrapati Shivajinagar Calling Desk</h1>
+    <p>Graduate &amp; teacher voter outreach · 209 छत्रपती शिवाजीनगर</p>
     <div class="seg" role="tablist">
       <button type="button" class="on" data-mode="caller">Caller</button>
       <button type="button" data-mode="admin">Adhyaksh</button>
@@ -244,7 +248,7 @@ tr.click:hover td{background:var(--hover)}
   <header class="top">
     <div class="toprow">
       <div class="logo">शि</div>
-      <h1>Shivajinagar Calling Desk<small id="who"></small></h1>
+      <h1>Chhatrapati Shivajinagar Calling Desk<small id="who"></small></h1>
       <span class="sync" id="sync"><span class="dot"></span><span class="hide-sm" id="syncTxt">Live</span></span>
       <button class="btn ghost" id="themeBtn" title="Switch light/dark">◐</button>
       <button class="btn ghost" id="logoutBtn">Log out</button>
@@ -254,9 +258,9 @@ tr.click:hover td{background:var(--hover)}
 
   <main>
     <div class="banner app-banner">
-      <div class="lead"><div class="kicker">Under the guidance of · <span class="mr">यांच्या मार्गदर्शनाखाली</span></div><h2>Shivajinagar Graduate &amp; Teacher Voter Outreach</h2></div>
+      <div class="lead"><div class="kicker">Under the guidance of · <span class="mr">यांच्या मार्गदर्शनाखाली</span></div><h2>Chhatrapati Shivajinagar Graduate &amp; Teacher Voter Outreach</h2></div>
       <div class="leaders">
-      <div class="leader"><div class="ph"><img src="img/siddharth-shirole.jpg" alt="Siddharth Shirole"></div><b>Siddharth Shirole</b><small>MLA, Shivajinagar</small></div>
+      <div class="leader"><div class="ph"><img src="img/siddharth-shirole.jpg" alt="Siddharth Shirole"></div><b>Siddharth Shirole</b><small>MLA, Chhatrapati Shivajinagar</small></div>
       <div class="leader"><div class="ph"><img src="img/sapna-chhajed.jpg" alt="Sapna Chhajed"></div><b>Sapna Chhajed</b><small>Corporator, Pune Municipal Corporation</small></div>
       <div class="leader"><div class="ph"><img src="img/anand-chhajed.jpg" alt="Anand Chhajed"></div><b>Anand Chhajed</b><small>Uttar Mandal Adhyaksh</small></div>
     </div>
@@ -310,6 +314,7 @@ tr.click:hover td{background:var(--hover)}
   <footer class="foot">Developed by <b>Sai Randive</b> (Sarchitnis, BJYM)</footer>
 </div>
 
+<div class="loader" id="loader" hidden><div class="spin big"></div><b>Loading voter list…</b><span>Please wait a moment</span></div>
 <div class="tip" id="tip" hidden></div>
 <div class="toast" id="toast" hidden></div>
 
@@ -320,7 +325,7 @@ const STL=Object.fromEntries(STATUSES.map(s=>[s[0],s[1]]));
 const STI=Object.fromEntries(STATUSES.map(s=>[s[0],s[2]]));
 const PENDING=new Set(['NA','CB']);
 const TIER={1:['★ Dual voter','tier1'],2:['Opinion leader','tier2'],3:['Professional / PG','tier3'],4:['General','tier4']};
-const PINNAME={'411001':'Pune Camp','411002':'Budhwar Peth','411003':'Khadki','411004':'Deccan Gymkhana','411005':'Shivajinagar','411006':'Yerawada','411007':'Aundh','411008':'Pashan','411011':'Kasba Peth','411015':'Vishrantwadi','411016':'Model Colony','411020':'Bopodi','411021':'Bavdhan','411027':'Sangvi','411028':'Hadapsar','411030':'Sadashiv Peth','411038':'Kothrud','411044':'Chinchwad','411045':'Baner','411046':'Katraj','411052':'Karvenagar','411057':'Hinjewadi','411058':'Warje'};
+const PINNAME={'411001':'Pune Camp','411002':'Budhwar Peth','411003':'Khadki','411004':'Deccan Gymkhana','411005':'Chhatrapati Shivajinagar','411006':'Yerawada','411007':'Aundh','411008':'Pashan','411011':'Kasba Peth','411015':'Vishrantwadi','411016':'Model Colony','411020':'Bopodi','411021':'Bavdhan','411027':'Sangvi','411028':'Hadapsar','411030':'Sadashiv Peth','411038':'Kothrud','411044':'Chinchwad','411045':'Baner','411046':'Katraj','411052':'Karvenagar','411057':'Hinjewadi','411058':'Warje'};
 const PAGE=40;
 
 const S={token:null,role:null,name:null,voters:[],byId:new Map(),status:{},tab:null,shown:PAGE,stats:null,online:true};
@@ -344,7 +349,7 @@ async function api(path,opts={}){
   if(r.status===401&&path!=='login'){logout();throw new Error('Session expired, please log in again')}
   const ct=r.headers.get('content-type')||'';
   const body=ct.includes('json')?await r.json():await r.blob();
-  if(!r.ok)throw new Error(body.error||'Request failed');
+  if(!r.ok)throw new Error(body.error||(r.status===404?'Server API not found — deploy the full repo on Netlify, not just index.html':'Request failed ('+r.status+')'));
   return body;
 }
 function setOnline(ok){S.online=ok;$('#sync .dot').classList.toggle('off',!ok);$('#syncTxt').textContent=ok?'Live':'Offline'}
@@ -357,21 +362,25 @@ $('#loginForm').onsubmit=async e=>{
   e.preventDefault();$('#loginErr').textContent='';
   const name=$('#name').value.trim();
   if(loginMode==='caller'&&!name){$('#loginErr').textContent='Please enter your name';return}
-  $('#loginBtn').disabled=true;
+  const password=$('#pass').value.trim();
+  if(!password){$('#loginErr').textContent='Please enter the password';return}
+  setBusy(true,'Logging in…');
   try{
-    const r=await api('login',{method:'POST',body:JSON.stringify({password:$('#pass').value,name:loginMode==='admin'?'Adhyaksh':name})});
+    const r=await api('login',{method:'POST',body:JSON.stringify({password,name:loginMode==='admin'?'Adhyaksh':name})});
     if(loginMode==='caller')store.set('scd_name',name);
-    start(r);
+    setBusy(true,'Loading voters…');
+    await start(r);
   }catch(err){$('#loginErr').textContent=err.message}
-  finally{$('#loginBtn').disabled=false}
+  finally{setBusy(false)}
 };
+function setBusy(on,label){const b=$('#loginBtn');b.disabled=on;b.innerHTML=on?`<span class="spin"></span>${esc(label)}`:'Log in';$('#loader').hidden=!on||label!=='Loading voters…'}
 function logout(){store.set('scd_session',null);S.token=null;clearInterval(S.poll);$('#app').hidden=true;$('#login').hidden=false;$('#pass').value=''}
 $('#logoutBtn').onclick=logout;
 
 async function start(sess){
   Object.assign(S,{token:sess.token,role:sess.role,name:sess.name});
   store.set('scd_session',JSON.stringify(sess));
-  $('#login').hidden=true;$('#app').hidden=false;
+  $('#loader').hidden=false;
   $('#who').textContent=(S.role==='admin'?'Adhyaksh dashboard · ':'Caller · ')+S.name;
   $('#list').innerHTML='<div class="empty">Loading voters…</div>';
   try{
@@ -379,7 +388,8 @@ async function start(sess){
     S.voters=v.voters;S.byId=new Map(S.voters.map(x=>[x.id,x]));
     S.status=Object.fromEntries(st.statuses.map(x=>[x.voter_id,x]));
     setOnline(true);
-  }catch(err){setOnline(false);toast(err.message);return}
+  }catch(err){$('#loader').hidden=true;$('#login').hidden=false;$('#app').hidden=true;$('#loginErr').textContent=err.message;return}
+  $('#loader').hidden=true;$('#login').hidden=true;$('#app').hidden=false;
   buildFilters();buildTabs();
   setTab(S.role==='admin'?'overview':'todo');
   clearInterval(S.poll);S.poll=setInterval(poll,20000);
@@ -517,7 +527,7 @@ $('#list').addEventListener('click',async e=>{
 async function loadStats(){try{S.stats=await api('stats');setOnline(true)}catch(err){setOnline(false);toast(err.message)}}
 $('#refreshBtn').onclick=async()=>{await loadStats();renderAdmin();toast('Updated')};
 $('#exportBtn').onclick=async()=>{
-  try{const blob=await api('export');const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`shivajinagar-calling-${new Date().toISOString().slice(0,10)}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
+  try{const blob=await api('export');const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`chhatrapati-shivajinagar-calling-${new Date().toISOString().slice(0,10)}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),5000)}
   catch(err){toast(err.message)}
 };
 function statusBar(counts,total){

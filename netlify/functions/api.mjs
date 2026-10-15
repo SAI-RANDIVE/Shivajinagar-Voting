@@ -49,7 +49,13 @@ function readToken(req) {
 const cleanName = (s) => String(s ?? '').replace(/\s+/g, ' ').trim().slice(0, 40);
 
 async function login(req) {
-  const { password, name } = await req.json().catch(() => ({}));
+  const missing = ['APP_PASSWORD', 'ADMIN_PASSWORD', 'DATABASE_URL'].filter((k) => !process.env[k]);
+  if (missing.length) {
+    return json({ error: `Server setup incomplete: add ${missing.join(', ')} in Netlify → Site configuration → Environment variables, then redeploy` }, 503);
+  }
+  const body = await req.json().catch(() => ({}));
+  const password = String(body.password ?? '').trim();
+  const name = body.name;
   if (same(password, process.env.ADMIN_PASSWORD)) {
     const n = cleanName(name) || 'Adhyaksh';
     return json({ token: issueToken('admin', n), role: 'admin', name: n });
