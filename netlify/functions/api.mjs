@@ -5,10 +5,11 @@ import { neon } from '@neondatabase/serverless';
 import { FINAL, STATUSES } from '../../lib/schema.mjs';
 
 const TOKEN_TTL_MS = 1000 * 60 * 60 * 24 * 7; // 7 days
-const CLAIM_MINUTES = 15; // how long a tapped Call keeps the voter locked to that caller
+const CLAIM_MINUTES = 30; // how long a tapped Call keeps the voter locked to that caller
+const SAVE_WINDOW_MINUTES = 180; // the caller can still save the result this long after tapping Call
 const CORRECTION_MINUTES = 10; // a caller may fix their own outcome for this long
 // Minimum seconds between tapping Call and saving an outcome, so nothing is ticked without calling.
-const MIN_SECONDS = { S: 15, N: 15, O: 15, CB: 8, NA: 8, WN: 5 };
+const MIN_SECONDS = { S: 10, N: 10, O: 10, CB: 5, NA: 5, WN: 3 };
 
 let sqlClient;
 const db = () => (sqlClient ??= neon(process.env.DATABASE_URL));
@@ -98,7 +99,8 @@ async function statuses() {
   const sql = db();
   const [st, cl] = await sql.transaction([
     sql`SELECT voter_id, status, caller, note, attempts, updated_at FROM voter_status`,
-    sql`SELECT voter_id, caller, dialed_at, expires_at FROM claims WHERE expires_at > now()`,
+    sql`SELECT voter_id, caller, dialed_at, expires_at FROM claims
+        WHERE expires_at > now() OR dialed_at > now() - make_interval(mins => ${SAVE_WINDOW_MINUTES})`,
   ]);
   return json({ statuses: st, claims: cl, now: new Date().toISOString() });
 }
@@ -108,7 +110,8 @@ async function currentState(voterId) {
   const [[status], [claim]] = await sql.transaction([
     sql`SELECT status, caller, updated_at FROM voter_status WHERE voter_id = ${voterId}`,
     sql`SELECT caller, session_id, dialed_at, expires_at, expires_at > now() AS active,
-               extract(epoch FROM now() - dialed_at)::int AS seconds
+               extract(epoch FROM now() - dialed_at)::int AS seconds,
+               dialed_at > now() - make_interval(mins => ${SAVE_WINDOW_MINUTES}) AS saveable
         FROM claims WHERE voter_id = ${voterId}`,
   ]);
   return { status, claim };
@@ -116,8 +119,9 @@ async function currentState(voterId) {
 
 // Tapping Call / WhatsApp claims the voter for this caller.
 async function dial(req, user) {
-  const { voter_id } = await req.json().catch(() => ({}));
+  const { voter_id, method } = await req.json().catch(() => ({}));
   if (!voter_id) return json({ error: 'Missing voter' }, 400);
+  const how = ['tel', 'wa', 'other'].includes(method) ? method : 'tel';
   const { status, claim } = await currentState(voter_id);
   if (status && FINAL.includes(status.status) && status.caller !== user.name && user.role !== 'admin') {
     return json({ error: `Already completed by ${status.caller}` }, 409);
@@ -125,7 +129,8 @@ async function dial(req, user) {
   if (claim?.active && claim.caller !== user.name) {
     return json({ error: `${claim.caller} is calling this voter right now` }, 409);
   }
-  const [row] = await db()`
+  const sql = db();
+  const [row] = await sql`
     INSERT INTO claims (voter_id, caller, session_id, dialed_at, expires_at)
     VALUES (${voter_id}, ${user.name}, ${user.sid}, now(), now() + make_interval(mins => ${CLAIM_MINUTES}))
     ON CONFLICT (voter_id) DO UPDATE SET caller = EXCLUDED.caller, session_id = EXCLUDED.session_id,
@@ -133,6 +138,8 @@ async function dial(req, user) {
     WHERE claims.expires_at <= now() OR claims.caller = EXCLUDED.caller
     RETURNING voter_id, caller, dialed_at, expires_at`;
   if (!row) return json({ error: 'Someone else just started calling this voter' }, 409);
+  await sql`INSERT INTO dials (voter_id, caller, session_id, method, created_at)
+            VALUES (${voter_id}, ${user.name}, ${user.sid}, ${how}, ${row.dialed_at})`;
   return json({ claim: row });
 }
 
@@ -147,7 +154,7 @@ async function recordCall(req, user) {
     return json({ error: `Already completed by ${prev.caller}` }, 409);
   }
 
-  const ownClaim = claim && claim.caller === user.name && claim.active;
+  const ownClaim = claim && claim.caller === user.name && claim.saveable;
   if (!ownClaim) {
     // No fresh Call tap: only allow fixing your own outcome from the last few minutes.
     const [last] = await sql`
@@ -207,6 +214,8 @@ async function stats() {
                count(s.voter_id)::int AS called,
                count(*) FILTER (WHERE s.status IN ('S','N','O','CB'))::int AS reached,
                (SELECT count(*) FROM call_logs)::int AS total_calls,
+               (SELECT count(*) FROM dials)::int AS total_dials,
+               (SELECT count(*) FROM dials WHERE (created_at AT TIME ZONE 'Asia/Kolkata')::date = ${sql.unsafe(IST_TODAY)})::int AS dials_today,
                (SELECT count(*) FROM call_logs WHERE (created_at AT TIME ZONE 'Asia/Kolkata')::date = ${sql.unsafe(IST_TODAY)})::int AS calls_today,
                (SELECT count(DISTINCT caller) FROM call_logs)::int AS callers,
                (SELECT count(*) FROM claims WHERE expires_at > now())::int AS calling_now,
@@ -231,18 +240,25 @@ async function stats() {
                  round(avg(extract(epoch FROM created_at - dialed_at)) FILTER (WHERE status IN ('S','N','O')))::int AS avg_secs,
                  min(created_at) AS first_call, max(created_at) AS last_call
           FROM call_logs GROUP BY caller),
+        d AS (
+          SELECT caller, count(*)::int AS dials,
+                 count(*) FILTER (WHERE NOT EXISTS (SELECT 1 FROM call_logs x WHERE x.voter_id = dd.voter_id
+                   AND x.caller = dd.caller AND x.dialed_at = dd.created_at))::int AS unsaved,
+                 max(created_at) AS last_dial
+          FROM dials dd GROUP BY caller),
         s AS (
           SELECT name, count(*)::int AS logins,
                  sum(extract(epoch FROM coalesce(ended_at, last_seen) - login_at))::int AS online_secs,
                  max(last_seen) AS last_seen
           FROM sessions GROUP BY name)
-        SELECT coalesce(c.caller, s.name) AS caller, coalesce(c.calls, 0) AS calls, coalesce(c.voters, 0) AS voters,
+        SELECT coalesce(c.caller, d.caller, s.name) AS caller, coalesce(c.calls, 0) AS calls, coalesce(c.voters, 0) AS voters,
+               coalesce(d.dials, 0) AS dials, coalesce(d.unsaved, 0) AS unsaved, d.last_dial,
                coalesce(c.today, 0) AS today, coalesce(c.s, 0) AS s, coalesce(c.n, 0) AS n, coalesce(c.o, 0) AS o,
                coalesce(c.na, 0) AS na, coalesce(c.cb, 0) AS cb, coalesce(c.wn, 0) AS wn, c.avg_secs,
                c.first_call, c.last_call, coalesce(s.logins, 0) AS logins, coalesce(s.online_secs, 0) AS online_secs,
                s.last_seen, s.last_seen > now() - interval '2 minutes' AS online
-        FROM c FULL JOIN s ON s.name = c.caller
-        ORDER BY calls DESC, online_secs DESC`,
+        FROM c FULL JOIN d ON d.caller = c.caller FULL JOIN s ON s.name = coalesce(c.caller, d.caller)
+        ORDER BY calls DESC, dials DESC, online_secs DESC`,
     sql`SELECT d::date AS day, count(c.id)::int AS n
         FROM generate_series(${sql.unsafe(IST_TODAY)} - 13, ${sql.unsafe(IST_TODAY)}, '1 day') d
         LEFT JOIN call_logs c ON (c.created_at AT TIME ZONE 'Asia/Kolkata')::date = d::date
@@ -285,18 +301,25 @@ async function callLog(url) {
   const days = { today: 0, yesterday: 1, '7d': 6 }[range];
   const offset = Math.max(0, Number(p.get('offset')) || 0);
   const sql = db();
+  // Saved calls plus Call taps that never got a result (status 'DIAL').
+  const events = sql`
+    SELECT x.created_at, x.dialed_at, extract(epoch FROM x.created_at - x.dialed_at)::int AS secs,
+           x.caller, x.status, x.note, x.voter_id FROM call_logs x
+    UNION ALL
+    SELECT dd.created_at, dd.created_at, NULL, dd.caller, 'DIAL', dd.method, dd.voter_id FROM dials dd
+    WHERE NOT EXISTS (SELECT 1 FROM call_logs x WHERE x.voter_id = dd.voter_id AND x.caller = dd.caller
+                        AND x.dialed_at = dd.created_at)`;
   const where = sql`
     (${caller}::text IS NULL OR c.caller = ${caller})
     AND (${status}::text IS NULL OR c.status = ${status})
     AND (${days ?? null}::int IS NULL OR (c.created_at AT TIME ZONE 'Asia/Kolkata')::date
          BETWEEN ${sql.unsafe(IST_TODAY)} - ${days ?? 0}::int AND ${sql.unsafe(IST_TODAY)} - ${range === 'yesterday' ? 1 : 0}::int)`;
   const [rows, [{ total }]] = await sql.transaction([
-    sql`SELECT c.id, c.created_at, c.dialed_at, extract(epoch FROM c.created_at - c.dialed_at)::int AS secs,
-               c.caller, c.status, c.note, v.id AS voter_id, v.name_en, v.name_mr, coalesce(v.mobile, v.mobile_added) AS mobile,
-               v.pin, v.source
-        FROM call_logs c JOIN voters v ON v.id = c.voter_id
+    sql`SELECT c.created_at, c.dialed_at, c.secs, c.caller, c.status, c.note, v.id AS voter_id, v.name_en, v.name_mr,
+               coalesce(v.mobile, v.mobile_added) AS mobile, v.pin, v.source
+        FROM (${events}) c JOIN voters v ON v.id = c.voter_id
         WHERE ${where} ORDER BY c.created_at DESC LIMIT 100 OFFSET ${offset}`,
-    sql`SELECT count(*)::int AS total FROM call_logs c WHERE ${where}`,
+    sql`SELECT count(*)::int AS total FROM (${events}) c WHERE ${where}`,
   ]);
   return json({ rows, total });
 }

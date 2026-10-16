@@ -62,7 +62,7 @@ select option{color:var(--ink);background:var(--card)}
 .pill{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:2px 9px;font-size:11.5px;font-weight:600;white-space:nowrap}
 .tier1{background:var(--t1s);color:var(--t1)}.tier2{background:var(--t2s);color:var(--t2)}.tier3{background:var(--t3s);color:var(--t3)}.tier4{background:var(--t4s);color:var(--t4)}
 .st-S{--c:var(--ok);--cs:var(--ok-soft)}.st-N{--c:var(--neu);--cs:var(--neu-soft)}.st-O{--c:var(--bad);--cs:var(--bad-soft)}
-.st-NA{--c:var(--warn);--cs:var(--warn-soft)}.st-CB{--c:var(--info);--cs:var(--info-soft)}.st-WN{--c:var(--off);--cs:var(--off-soft)}
+.st-NA{--c:var(--warn);--cs:var(--warn-soft)}.st-DIAL{--c:var(--ink3);--cs:var(--card2)}.st-CB{--c:var(--info);--cs:var(--info-soft)}.st-WN{--c:var(--off);--cs:var(--off-soft)}
 .badge{background:var(--cs);color:var(--c)}
 
 /* Guidance banner (always white text on saffron) */
@@ -173,6 +173,16 @@ main>.banner{margin-bottom:14px}
 .more{display:flex;justify-content:center;margin:14px 0}
 .empty{text-align:center;color:var(--ink3);padding:36px 12px;background:var(--card);border:1px dashed var(--line);border-radius:12px}
 .link{background:none;border:0;color:var(--info);cursor:pointer;padding:0;font-weight:600;font-size:12.5px;text-align:left}
+
+/* Result bar: stays on screen while a call of mine is waiting for its result */
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--card);color:var(--ink);border-top:3px solid var(--ok);box-shadow:0 -8px 24px rgba(0,0,0,.18);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.sheet .in{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:8px}
+.sheet .who{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:13.5px}
+.sheet .who b{font-size:15px}
+.sheet .more2{font-size:12px;color:var(--ink3)}
+body.has-sheet footer.foot{padding-bottom:260px}
+body.has-sheet .toast{bottom:calc(250px + env(safe-area-inset-bottom))}
+.other{font-size:12.5px}
 
 /* Adhyaksh views */
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:12px}
@@ -325,6 +335,7 @@ tr.click:hover td{background:var(--card2)}
 </div>
 
 <div class="loader" id="loader" hidden><span class="spin"></span><b>Loading voter list…</b><span>Please wait a moment</span></div>
+<div class="sheet" id="sheet" hidden></div>
 <div class="tip" id="tip" hidden></div>
 <div class="toast" id="toast" hidden></div>
 
@@ -332,9 +343,10 @@ tr.click:hover td{background:var(--card2)}
 'use strict';
 const LEADERS=[['siddharth-shirole','Siddharth Shirole','MLA, Chhatrapati Shivajinagar'],['sapna-chhajed','Sapna Chhajed','Corporator, Pune Municipal Corporation'],['anand-chhajed','Anand Chhajed','Uttar Mandal Adhyaksh']];
 const STATUSES=[['S','Supportive','✓'],['N','Neutral','–'],['O','Opposed','✕'],['NA','No answer','☎'],['CB','Call back','↻'],['WN','Wrong / Off','⊘']];
-const STL=Object.fromEntries(STATUSES.map(s=>[s[0],s[1]])),STI=Object.fromEntries(STATUSES.map(s=>[s[0],s[2]]));
+const STL={...Object.fromEntries(STATUSES.map(s=>[s[0],s[1]])),DIAL:'Dialed — result not saved'},STI={...Object.fromEntries(STATUSES.map(s=>[s[0],s[2]])),DIAL:'📞'};
 const FINAL=new Set(['S','N','O','WN']);
-const MIN_SECONDS={S:15,N:15,O:15,CB:8,NA:8,WN:5};
+const MIN_SECONDS={S:10,N:10,O:10,CB:5,NA:5,WN:3};
+const SAVE_WINDOW_MS=180*60*1000;
 const TIER={1:['★ Dual voter','tier1'],2:['Opinion leader','tier2'],3:['Professional / PG','tier3'],4:['General','tier4']};
 const PINNAME={'411001':'Pune Camp','411002':'Budhwar Peth','411003':'Khadki','411004':'Deccan Gymkhana','411005':'Shivajinagar','411006':'Yerawada','411007':'Aundh','411008':'Pashan','411011':'Kasba Peth','411015':'Vishrantwadi','411016':'Model Colony','411020':'Bopodi','411021':'Bavdhan','411027':'Sangvi','411028':'Hadapsar','411030':'Sadashiv Peth','411038':'Kothrud','411044':'Chinchwad','411045':'Baner','411046':'Katraj','411052':'Karvenagar','411057':'Hinjewadi','411058':'Warje'};
 const CONS={graduate:['पदवीधर','Pune Graduate constituency'],teacher:['शिक्षक','Pune Teachers constituency']};
@@ -453,11 +465,13 @@ async function start(sess){
   clearInterval(S.tick);S.tick=setInterval(tickTimers,1000);
 }
 function applyStatus(st){S.status=Object.fromEntries(st.statuses.map(x=>[x.voter_id,x]));S.claims=Object.fromEntries(st.claims.map(x=>[x.voter_id,x]));S.skew=Date.now()-new Date(st.now)}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()});
+window.addEventListener('pageshow',()=>{if(S.token)poll()});
 async function poll(){
   if(document.hidden||!S.token)return;
   try{
     applyStatus(await api('status'));
-    if(S.tab==='calling'){if(!document.activeElement?.closest?.('#list'))renderCall()}
+    if(S.tab==='calling'){if(!document.activeElement?.closest?.('#list,#sheet'))renderCall()}
     else await loadAdmin();
   }catch{}
 }
@@ -474,7 +488,7 @@ async function setTab(t){
   S.tab=t;
   document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));
   const call=t==='calling';
-  $('#callView').hidden=!call;$('#adminView').hidden=call;$('#appBanner').hidden=S.role==='admin'&&!call&&t!=='overview';
+  $('#callView').hidden=!call;$('#adminView').hidden=call;if(!call){$('#sheet').hidden=true;document.body.classList.remove('has-sheet')}$('#appBanner').hidden=S.role==='admin'&&!call&&t!=='overview';
   if(call){S.shown=PAGE;renderCall()}else{$('#adminBody').innerHTML='<div class="empty"><span class="spin"></span> Loading…</div>';await loadAdmin()}
   window.scrollTo({top:0});
 }
@@ -508,6 +522,8 @@ function saveFilters(){const o={cons:S.cons};['fPin','fTier','fPart','fSort','fG
 const now=()=>Date.now()-(S.skew||0);
 const activeClaim=id=>{const c=S.claims[id];return c&&new Date(c.expires_at)>now()?c:null};
 const lockedByOther=id=>{const c=activeClaim(id);return c&&c.caller!==S.name?c:null};
+// A call I started whose result is not saved yet (kept for 3 hours so returning from the dialer never loses it).
+const myPending=id=>{const c=S.claims[id];return c&&c.caller===S.name&&now()-new Date(c.dialed_at)<SAVE_WINDOW_MS&&!(S.status[id]&&new Date(S.status[id].updated_at)>=new Date(c.dialed_at))?c:null};
 function bucket(v){
   const s=S.status[v.id];
   if(s&&FINAL.has(s.status))return'done';
@@ -556,7 +572,8 @@ function renderCall(){
   if(S.sub==='todo')rows=rows.filter(v=>!lockedByOther(v.id));
   rows=sortList(rows);
   // Voters I am currently calling always stay on top.
-  rows.sort((a,b)=>(activeClaim(b.id)?.caller===S.name)-(activeClaim(a.id)?.caller===S.name));
+  rows.sort((a,b)=>!!myPending(b.id)-!!myPending(a.id));
+  renderSheet();
   const list=$('#list');
   if(!rows.length){list.innerHTML=`<div class="empty">${$('#fQ').value.trim()?'No voter matches this search. Try fewer letters or only the first name.':S.sub==='todo'?'Nothing left to call here 🎉 — check “Call back”.':'No voters here.'}</div>`;$('#moreBtn').hidden=true;return}
   list.innerHTML=rows.slice(0,S.shown).map(card).join('');
@@ -566,7 +583,7 @@ function renderCall(){
 $('#moreBtn').onclick=()=>{S.shown+=PAGE*2;renderCall()};
 
 function card(v){
-  const s=S.status[v.id],claim=activeClaim(v.id),other=lockedByOther(v.id),mineNow=claim&&claim.caller===S.name;
+  const s=S.status[v.id],other=lockedByOther(v.id),mineNow=!!myPending(v.id);
   const [tl,tc]=TIER[v.tier]||TIER[4];
   const doneByOther=s&&FINAL.has(s.status)&&s.caller!==S.name&&S.role!=='admin';
   const canFix=s&&s.caller===S.name&&(now()-new Date(s.updated_at))<10*60*1000;
@@ -581,12 +598,10 @@ function card(v){
   if(other)action=`<div class="flag">🔒 <b>${esc(other.caller)}</b> is calling this voter now.</div>`;
   else if(doneByOther)action='';
   else if(!v.mobile)action=`<div class="addnum"><input inputmode="numeric" maxlength="14" placeholder="Found a mobile number? Add it" data-num="${esc(v.id)}"><button class="btn small" data-addnum="${esc(v.id)}">Save</button></div>`;
-  else action=`<div class="acts"><button class="btn call" data-dial="tel" data-id="${esc(v.id)}">📞 ${v.mobile.replace(/(\d{5})(\d{5})/,'$1 $2')}</button><button class="btn" data-dial="wa" data-id="${esc(v.id)}">WhatsApp</button></div>`;
+  else if(!mineNow)action=`<div class="acts"><button class="btn call" data-dial="tel" data-id="${esc(v.id)}">📞 ${v.mobile.replace(/(\d{5})(\d{5})/,'$1 $2')}</button><button class="btn" data-dial="wa" data-id="${esc(v.id)}">WhatsApp</button></div>
+    <button class="link other" data-dial="other" data-id="${esc(v.id)}">📱 I’m calling from another phone</button>`;
   let outcome='';
-  if(mineNow)outcome=`<div class="timer"><span class="spin"></span><span data-timer="${esc(v.id)}">Calling…</span></div>
-    <div class="chips">${STATUSES.map(([k,l,i])=>`<button class="chip st-${k}" data-st="${k}" data-id="${esc(v.id)}">${i} ${l}</button>`).join('')}</div>
-    <textarea class="note" rows="1" maxlength="500" placeholder="Note (optional)" data-note="${esc(v.id)}">${esc(S.notes[v.id]||'')}</textarea>
-    <button class="link" data-cancel="${esc(v.id)}">Cancel — I didn’t call</button>`;
+  if(mineNow)outcome=`<div class="timer"><span class="spin"></span><span data-timer="${esc(v.id)}">Calling…</span></div>${outcomeControls(v)}`;
   else if(canFix)outcome=S.open[v.id]?`<div class="chips">${STATUSES.map(([k,l,i])=>`<button class="chip st-${k} ${s.status===k?'on':''}" data-st="${k}" data-id="${esc(v.id)}">${i} ${l}</button>`).join('')}</div>`:`<button class="link" data-fix="${esc(v.id)}">✎ Change my outcome</button>`;
   return `<article class="vc ${mineNow?'mine':''} ${other?'locked':''}">
     <div class="vh"><div class="nm"><b>${esc(v.name_en||v.name_mr)}</b>${v.name_en?`<span class="mr">${esc(v.name_mr)}</span>`:''}</div><span class="pill ${tc}">${tl}</span></div>
@@ -598,40 +613,61 @@ function card(v){
     ${action}${outcome}
   </article>`;
 }
+function outcomeControls(v){
+  return `<div class="chips">${STATUSES.map(([k,l,i])=>`<button class="chip st-${k}" data-st="${k}" data-id="${esc(v.id)}">${i} ${l}</button>`).join('')}</div>
+    <textarea class="note" rows="1" maxlength="500" placeholder="Note (optional)" data-note="${esc(v.id)}">${esc(S.notes[v.id]||'')}</textarea>
+    <button class="link" data-cancel="${esc(v.id)}">Cancel — I didn’t call</button>`;
+}
+// Bottom bar with the result buttons for my latest unsaved call, visible from anywhere in the list.
+function renderSheet(){
+  const sheet=$('#sheet');
+  if(S.tab!=='calling'||document.activeElement?.closest?.('#sheet')){return}
+  const mine=Object.values(S.claims).filter(c=>myPending(c.voter_id)&&S.byId.get(c.voter_id)).sort((a,b)=>new Date(b.dialed_at)-new Date(a.dialed_at));
+  document.body.classList.toggle('has-sheet',mine.length>0);
+  if(!mine.length){sheet.hidden=true;sheet.innerHTML='';return}
+  const v=S.byId.get(mine[0].voter_id);
+  sheet.innerHTML=`<div class="in"><div class="who"><span><b>${esc(v.name_en||v.name_mr)}</b> · ${esc(v.mobile||'')}</span><span class="timer"><span data-timer="${esc(v.id)}"></span></span></div>
+    ${mine.length>1?`<div class="more2">+ ${mine.length-1} more call(s) waiting for a result — they are at the top of your list</div>`:''}
+    ${outcomeControls(v)}</div>`;
+  sheet.hidden=false;tickTimers();
+}
 function tickTimers(){
   document.querySelectorAll('[data-timer]').forEach(el=>{
-    const c=activeClaim(el.dataset.timer);if(!c)return;
+    const c=myPending(el.dataset.timer);if(!c)return;
     const sec=Math.floor((now()-new Date(c.dialed_at))/1000);
-    el.textContent=`On call ${fmtDur(sec)} — tap the result after the call`;
+    el.textContent=`Called ${fmtDur(sec)} ago — tap the result`;
   });
 }
 
-$('#list').addEventListener('input',e=>{const n=e.target.dataset.note;if(n)S.notes[n]=e.target.value});
-$('#list').addEventListener('click',async e=>{
+function onNote(e){const n=e.target.dataset.note;if(n){S.notes[n]=e.target.value;document.querySelectorAll(`[data-note="${CSS.escape(n)}"]`).forEach(x=>{if(x!==e.target)x.value=e.target.value})}}
+$('#list').addEventListener('input',onNote);$('#sheet').addEventListener('input',onNote);
+$('#list').addEventListener('click',onAction);$('#sheet').addEventListener('click',onAction);
+async function onAction(e){
   const t=e.target.closest('button');if(!t)return;
   if(t.dataset.dial){
-    const id=t.dataset.id,v=S.byId.get(id);
-    const win=t.dataset.dial==='wa'?window.open('about:blank','_blank'):null;
+    const id=t.dataset.id,v=S.byId.get(id),how=t.dataset.dial;
+    const win=how==='wa'?window.open('about:blank','_blank'):null;
     t.disabled=true;
     try{
-      const r=await api('dial',{method:'POST',body:JSON.stringify({voter_id:id})});
+      const r=await api('dial',{method:'POST',body:JSON.stringify({voter_id:id,method:how})});
       S.claims[id]=r.claim;
-      if(win)win.location='https://wa.me/91'+v.mobile;else location.href='tel:+91'+v.mobile;
+      if(win)win.location='https://wa.me/91'+v.mobile;else if(how==='tel')location.href='tel:+91'+v.mobile;
+      else toast('Call from your other phone, then tap the result below');
     }catch(err){if(win)win.close();toast(err.message,true)}
     renderCall();return;
   }
   if(t.dataset.st){
-    const id=t.dataset.id,status=t.dataset.st,c=activeClaim(id);
-    if(c&&c.caller===S.name){const wait=MIN_SECONDS[status]-Math.floor((now()-new Date(c.dialed_at))/1000);if(wait>0){toast(`Finish the call first — you can save this in ${wait} s`,true);return}}
+    const id=t.dataset.id,status=t.dataset.st,c=myPending(id);
+    if(c){const wait=MIN_SECONDS[status]-Math.floor((now()-new Date(c.dialed_at))/1000);if(wait>0){toast(`Finish the call first — you can save this in ${wait} s`,true);return}}
     t.disabled=true;
     try{
       const r=await api('call',{method:'POST',body:JSON.stringify({voter_id:id,status,note:S.notes[id]||''})});
-      S.status[id]=r.status;delete S.claims[id];delete S.notes[id];delete S.open[id];
+      S.status[id]=r.status;delete S.claims[id];delete S.notes[id];delete S.open[id];$('#sheet').blur?.();document.activeElement?.blur?.();
       const v=S.byId.get(id);toast(`${r.corrected?'Changed to':'Saved:'} ${STL[status]} · ${v.name_en||v.name_mr}`);
     }catch(err){toast(err.message,true)}
     renderCall();return;
   }
-  if(t.dataset.cancel){const id=t.dataset.cancel;try{await api('release',{method:'POST',body:JSON.stringify({voter_id:id})})}catch{}delete S.claims[id];renderCall();return}
+  if(t.dataset.cancel){const id=t.dataset.cancel;try{await api('release',{method:'POST',body:JSON.stringify({voter_id:id})})}catch{}delete S.claims[id];document.activeElement?.blur?.();renderCall();return}
   if(t.dataset.fix){S.open[t.dataset.fix]=true;renderCall();return}
   if(t.dataset.addnum){
     const id=t.dataset.addnum,inp=document.querySelector(`[data-num="${CSS.escape(id)}"]`);
@@ -639,7 +675,7 @@ $('#list').addEventListener('click',async e=>{
     catch(err){toast(err.message,true)}
     renderCall();
   }
-});
+}
 
 /* ---------- Adhyaksh ---------- */
 $('#refreshBtn').onclick=async()=>{await loadAdmin();toast('Updated')};
@@ -675,7 +711,8 @@ function renderAdmin(){
     const cons=Object.fromEntries(d.byCons.map(x=>[x.cons,x]));
     h+=`<div class="kpis">
       ${kpi('Online now',fmt(t.online),`${fmt(t.calling_now)} on a call right now`,'var(--ok)')}
-      ${kpi('Calls today',fmt(t.calls_today),`${fmt(t.total_calls)} calls in total`)}
+      ${kpi('Results saved today',fmt(t.calls_today),`${fmt(t.total_calls)} in total`)}
+      ${kpi('Call taps today',fmt(t.dials_today),`${fmt(t.total_dials)} Call taps in total`)}
       ${kpi('Voters called',fmt(t.called),`${pct(t.called,t.with_mobile)}% of ${fmt(t.with_mobile)} with a number`)}
       ${kpi('Reached',fmt(t.reached),'picked up and spoke')}
       ${kpi('Supportive',fmt(sc.S||0),`${pct(sc.S||0,t.reached)}% of reached`,'var(--ok)')}
@@ -692,13 +729,13 @@ function renderAdmin(){
       <div class="panel"><h3>Calls per day · last 14 days</h3>${columns(d.daily,r=>new Date(r.day).toLocaleDateString('en-IN',{day:'numeric',month:'short'}),3)}</div>
     </div>
     <div class="grid2">
-      <div class="panel"><h3>Top callers</h3>${callerTable(d.byCaller.filter(c=>c.calls).slice(0,6),true)}</div>
+      <div class="panel"><h3>Top callers</h3>${callerTable(d.byCaller.filter(c=>c.calls||c.dials).slice(0,6),true)}</div>
       <div class="panel"><h3>Coverage by voter type</h3><div class="tablewrap"><table><thead><tr><th>Type</th><th class="r">Voters</th><th class="r">Called</th><th>Progress</th><th class="r">✓</th></tr></thead><tbody>
         ${d.byTier.map(r=>`<tr><td><span class="pill ${TIER[r.tier][1]}">${TIER[r.tier][0]}</span></td><td class="r num">${fmt(r.total)}</td><td class="r num">${fmt(r.called)}</td><td>${mini(r.called,r.total)}</td><td class="r num">${fmt(r.s)}</td></tr>`).join('')}
       </tbody></table></div></div>
     </div>`;
   }else if(S.tab==='callers'){
-    h+=`<div class="panel"><h3>${d.byCaller.length} people · tap a row to see their calls</h3>${callerTable(d.byCaller,false)}</div>`;
+    h+=`<div class="panel"><h3>${d.byCaller.length} people · tap a row to see their calls</h3><p class="muted" style="margin:-4px 0 10px;font-size:12.5px">Call taps = times they pressed Call. Saved = calls with a result. Not saved = pressed Call but never recorded the result.</p>${callerTable(d.byCaller,false)}</div>`;
   }else if(S.tab==='logins'){
     const ss=S.sessions||[];const on=ss.filter(x=>x.online);
     h+=`<div class="kpis">${kpi('Online now',fmt(on.length),on.map(x=>esc(x.name)).join(', ')||'nobody','var(--ok)')}${kpi('Logins today',fmt(ss.filter(x=>new Date(x.login_at).toDateString()===new Date().toDateString()).length),'sessions started today')}${kpi('People',fmt(new Set(ss.map(x=>x.name)).size),'different names logged in')}</div>
@@ -708,12 +745,12 @@ function renderAdmin(){
   }else if(S.tab==='log'){
     const l=S.log;
     h+=`<div class="filterbar">
-      <select id="lCaller"><option value="">All callers</option>${d.byCaller.filter(c=>c.calls).map(c=>`<option ${c.caller===l.caller?'selected':''}>${esc(c.caller)}</option>`).join('')}</select>
-      <select id="lStatus"><option value="">All outcomes</option>${STATUSES.map(([k,lb])=>`<option value="${k}" ${k===l.status?'selected':''}>${lb}</option>`).join('')}</select>
+      <select id="lCaller"><option value="">All callers</option>${d.byCaller.filter(c=>c.calls||c.dials).map(c=>`<option ${c.caller===l.caller?'selected':''}>${esc(c.caller)}</option>`).join('')}</select>
+      <select id="lStatus"><option value="">All outcomes</option>${STATUSES.map(([k,lb])=>`<option value="${k}" ${k===l.status?'selected':''}>${lb}</option>`).join('')}<option value="DIAL" ${l.status==='DIAL'?'selected':''}>Dialed — result not saved</option></select>
       <select id="lRange">${[['today','Today'],['yesterday','Yesterday'],['7d','Last 7 days'],['all','All time']].map(([k,lb])=>`<option value="${k}" ${k===l.range?'selected':''}>${lb}</option>`).join('')}</select>
     </div>
-    <div class="panel"><h3>${fmt(l.total)} calls${l.total>l.rows.length?` · showing latest ${l.rows.length}`:''}</h3>${l.rows.length?`<div class="tablewrap"><table><thead><tr><th>Time</th><th>Caller</th><th>Voter</th><th>Mobile</th><th>Pin</th><th>Outcome</th><th class="r">Call time</th><th>Note</th></tr></thead><tbody>
-      ${l.rows.map(r=>`<tr><td>${fmtTime(r.created_at)}</td><td><b>${esc(r.caller)}</b></td><td class="wrap">${esc(r.name_en||r.name_mr)}${r.name_en?`<br><span class="muted mr">${esc(r.name_mr)}</span>`:''}</td><td class="num">${esc(r.mobile||'—')}</td><td>${esc(r.pin||'—')}</td><td><span class="pill badge st-${r.status}">${STI[r.status]} ${STL[r.status]}</span></td><td class="r num">${r.secs!=null?fmtDur(r.secs):'—'}</td><td class="wrap">${esc(r.note||'')}</td></tr>`).join('')}
+    <div class="panel"><h3>${fmt(l.total)} entries${l.total>l.rows.length?` · showing latest ${l.rows.length}`:''}</h3>${l.rows.length?`<div class="tablewrap"><table><thead><tr><th>Time</th><th>Caller</th><th>Voter</th><th>Mobile</th><th>Pin</th><th>Outcome</th><th class="r">Call time</th><th>Note</th></tr></thead><tbody>
+      ${l.rows.map(r=>`<tr><td>${fmtTime(r.created_at)}</td><td><b>${esc(r.caller)}</b></td><td class="wrap">${esc(r.name_en||r.name_mr)}${r.name_en?`<br><span class="muted mr">${esc(r.name_mr)}</span>`:''}</td><td class="num">${esc(r.mobile||'—')}</td><td>${esc(r.pin||'—')}</td><td><span class="pill badge st-${r.status}">${STI[r.status]} ${STL[r.status]}</span></td><td class="r num">${r.secs!=null?fmtDur(r.secs):'—'}</td><td class="wrap">${r.status==='DIAL'?`<span class="muted">${r.note==='other'?'from another phone':r.note==='wa'?'WhatsApp':'phone'}</span>`:esc(r.note||'')}</td></tr>`).join('')}
     </tbody></table></div>`:'<div class="empty">No calls for these filters.</div>'}</div>`;
   }else if(S.tab==='pins'){
     h+=`<div class="panel"><h3>All pin codes · tap a row to open its calling list</h3>${pinTable(d.byPin)}</div>`;
@@ -725,8 +762,8 @@ function renderAdmin(){
 }
 function callerTable(rows,short){
   if(!rows.length)return'<div class="empty">No calls logged yet.</div>';
-  return `<div class="tablewrap"><table><thead><tr><th>Caller</th><th class="r">Calls</th><th class="r">Today</th>${short?'':'<th class="r">Voters</th>'}<th class="r" style="color:var(--ok)">✓</th><th class="r">–</th><th class="r" style="color:var(--bad)">✕</th>${short?'':'<th class="r">☎</th><th class="r">↻</th><th class="r">⊘</th><th class="r">Avg talk</th><th class="r">Time online</th><th class="r">Logins</th><th>First call</th>'}<th>Last call</th></tr></thead><tbody>
-  ${rows.map(r=>`<tr class="click" data-caller="${esc(r.caller)}"><td><span class="dot ${r.online?'':'grey'}"></span> <b>${esc(r.caller)}</b></td><td class="r num"><b>${fmt(r.calls)}</b></td><td class="r num">${fmt(r.today)}</td>${short?'':`<td class="r num">${fmt(r.voters)}</td>`}<td class="r num" style="color:var(--ok)">${r.s}</td><td class="r num">${r.n}</td><td class="r num" style="color:var(--bad)">${r.o}</td>${short?'':`<td class="r num">${r.na}</td><td class="r num">${r.cb}</td><td class="r num">${r.wn}</td><td class="r num">${r.avg_secs!=null?fmtDur(r.avg_secs):'—'}</td><td class="r num">${fmtDur(r.online_secs)}</td><td class="r num">${r.logins}</td><td>${fmtTime(r.first_call)}</td>`}<td>${ago(r.last_call)}</td></tr>`).join('')}
+  return `<div class="tablewrap"><table><thead><tr><th>Caller</th><th class="r">Call taps</th><th class="r">Saved</th><th class="r">Not saved</th><th class="r">Today</th>${short?'':'<th class="r">Voters</th>'}<th class="r" style="color:var(--ok)">✓</th><th class="r">–</th><th class="r" style="color:var(--bad)">✕</th>${short?'':'<th class="r">☎</th><th class="r">↻</th><th class="r">⊘</th><th class="r">Avg talk</th><th class="r">Time online</th><th class="r">Logins</th><th>First call</th>'}<th>Last call</th></tr></thead><tbody>
+  ${rows.map(r=>`<tr class="click" data-caller="${esc(r.caller)}"><td><span class="dot ${r.online?'':'grey'}"></span> <b>${esc(r.caller)}</b></td><td class="r num">${fmt(r.dials)}</td><td class="r num"><b>${fmt(r.calls)}</b></td><td class="r num" style="color:${r.unsaved?'var(--warn)':'inherit'}">${fmt(r.unsaved)}</td><td class="r num">${fmt(r.today)}</td>${short?'':`<td class="r num">${fmt(r.voters)}</td>`}<td class="r num" style="color:var(--ok)">${r.s}</td><td class="r num">${r.n}</td><td class="r num" style="color:var(--bad)">${r.o}</td>${short?'':`<td class="r num">${r.na}</td><td class="r num">${r.cb}</td><td class="r num">${r.wn}</td><td class="r num">${r.avg_secs!=null?fmtDur(r.avg_secs):'—'}</td><td class="r num">${fmtDur(r.online_secs)}</td><td class="r num">${r.logins}</td><td>${fmtTime(r.first_call)}</td>`}<td>${ago(r.last_call||r.last_dial)}</td></tr>`).join('')}
   </tbody></table></div>`;
 }
 function pinTable(rows){
